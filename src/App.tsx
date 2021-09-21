@@ -18,6 +18,7 @@ const App = (props: stateProps) => {
     return (
         <BrowserRouter>
             <div className={'app-wraper'}>
+                <div>Checkig GIT</div>
                 <Header/>
                 <NavBar/>
                 <div className={'app-wraper-content'}>
