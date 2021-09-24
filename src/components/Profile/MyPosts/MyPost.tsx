@@ -1,13 +1,13 @@
 import classes from './MyPost.module.css'
 import React, {ChangeEvent} from "react";
 import Post from "./Post1/Post";
-import {postType} from "../../../redux/state";
+import {ActionType, postType} from "../../../redux/state";
 
 type myPostProps = {
     newPostText: string
     statePosts: Array<postType>
-    addPostCallback: (postMessage: string)=> void
-    changeAreaTextCallback: (NewText: string)=> void
+    dispatch: (action: ActionType) => void
+
 }
 
 const MyPost = (props: myPostProps) => {
@@ -18,10 +18,12 @@ const MyPost = (props: myPostProps) => {
     let newPostElement = React.createRef<HTMLTextAreaElement>();
 
     let addPostCallback = () => {
-        props.addPostCallback(newPostElement.current ? newPostElement.current.value : "")
+        props.dispatch({type: 'ADD-POST', postMessage: newPostElement.current ? newPostElement.current.value : ""} )
+        // props.addPostCallback(newPostElement.current ? newPostElement.current.value : "")
     }
     let onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.changeAreaTextCallback(e.currentTarget.value)
+        props.dispatch({type: "UPDATE-NEW-POST-TEXT", NewText: e.currentTarget.value})
+        // props.changeAreaTextCallback(e.currentTarget.value)
     }
 
     return (

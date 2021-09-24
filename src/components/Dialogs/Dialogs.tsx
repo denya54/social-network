@@ -3,11 +3,11 @@ import {NavLink} from 'react-router-dom';
 import classes from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-import {dialogsPageType} from "../../redux/state";
+import {ActionType, dialogsPageType} from "../../redux/state";
 
 type dialogsProps = {
     state: dialogsPageType
-    changeDialogAreaTextCallback: (NewText: string)=> void
+    dispatch: (action: ActionType) => void
 }
 
 const Dialogs = (props: dialogsProps) => {
@@ -16,7 +16,7 @@ const Dialogs = (props: dialogsProps) => {
     let messagesElements = props.state.dialogMessages.map(dM => <Message id={dM.id}
                                                                          message={dM.message}
                                                                          areaMessage={props.state.dialogArea}
-                                                                         changeDialogAreaTextCallback={props.changeDialogAreaTextCallback}
+                                                                         dispatch={props.dispatch}
     />)
 
 

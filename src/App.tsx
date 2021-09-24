@@ -9,7 +9,6 @@ import { StoreType} from "./redux/state";
 
 type stateProps = {
     state: StoreType
-    // addPost: (postMessage: string) => void
 }
 
 const App = (props: stateProps) => {
@@ -21,11 +20,12 @@ const App = (props: stateProps) => {
                 <NavBar/>
                 <div className={'app-wraper-content'}>
                     <Route path='/profile' render={() => <Profile stateProfile={state.profilePage}
-                                                                  addPostCallback={props.state.addPost.bind(props.state)}
-                                                                  changeAreaTextCallback={props.state.changeAreaText.bind(props.state)}
+                                                                  dispatch={props.state.dispatch.bind(props.state)}
+
                     />} />
                     <Route path='/dialogs' render={() => <Dialogs state={state.dialogsPage}
-                                                                  changeDialogAreaTextCallback={props.state.changeDialogAreaText} />}/>
+                                                                  dispatch={props.state.dispatch.bind(props.state)}
+                                                                  />}/>
                     {/*<Route path='/news' component={News}/>*/}
                     {/*<Route path='/music' component={Music}/>*/}
                     {/*<Route path='/settings' component={Settings}/>*/}
