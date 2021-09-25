@@ -1,7 +1,8 @@
 import classes from './MyPost.module.css'
 import React, {ChangeEvent} from "react";
 import Post from "./Post1/Post";
-import {ActionType, addPostActionCreator, postType, updateNewPostTextActionCreator} from "../../../redux/state";
+import {ActionType, postType} from "../../../redux/state";
+import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../redux/profile-reducer";
 
 type myPostProps = {
     newPostText: string

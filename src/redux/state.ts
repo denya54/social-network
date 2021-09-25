@@ -1,8 +1,6 @@
-
-const ADD_POST = 'ADD-POST'
-const UPDATE_NEW_POST_TEXT ='UPDATE-NEW-POST-TEXT'
-const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'
-const SEND_MESSAGE = 'SEND_MESSAGE'
+import profileReducer, {AddPostActionType, UpdateNewPostTextType} from "./profile-reducer";
+import dialogReducer, {SendMessageType, UpdateNewMessageBodyType} from "./dialog-reducer";
+import sidebarReducer from "./sidebar-reducer";
 
 export type StoreType = {
     _state: stateType
@@ -63,49 +61,17 @@ let store: StoreType = {
         return this._state
     },
     dispatch(action) {
-        if (action.type === ADD_POST) {
-            let newPost: postType = {
-                id: 4,
-                message: action.postMessage,
-                likesCount: 0
-            }
-            this._state.profilePage.posts.push(newPost);
-            this._state.profilePage.newPostText = ""
-            this._callSubscriber(this._state)
-        } else if (action.type === UPDATE_NEW_POST_TEXT) {
-            this._state.profilePage.newPostText = action.NewText
-            this._callSubscriber(this._state)
-        } else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
-            this._state.dialogsPage.newMessageBody = action.NewText
-            this._callSubscriber(this._state)
-        } else if(action.type === SEND_MESSAGE) {
-            let body = this._state.dialogsPage.newMessageBody
-            this._state.dialogsPage.newMessageBody = ""
-            this._state.dialogsPage.dialogMessages.push({id: 6, message: body},)
-            this._callSubscriber(this._state)
-        }
+        this._state.profilePage = profileReducer(this._state.profilePage, action)
+        this._state.dialogsPage = dialogReducer(this._state.dialogsPage, action)
+        this._callSubscriber(this._state)
     },
     subscribe(observer: (state: stateType) => void) {
         this._callSubscriber = observer
     },
 }
-type AddPostActionType = ReturnType<typeof addPostActionCreator>
-type UpdateNewPostTextType = ReturnType<typeof updateNewPostTextActionCreator>
 
-export const addPostActionCreator = (postText: string) => ({type: ADD_POST, postMessage: postText} as const)
-export const updateNewPostTextActionCreator = (postText: string)  => {
-    return {type: UPDATE_NEW_POST_TEXT, NewText: postText} as const
-}
 
-type UpdateNewMessageBodyType = ReturnType<typeof updateNewMessageBodyCreator>
-export const updateNewMessageBodyCreator = (messageText: string) => {
-    return {
-        type: UPDATE_NEW_MESSAGE_BODY,
-        NewText: messageText
-    } as const
-}
-type SendMessageType = ReturnType<typeof sendMessageCreator>
-export const sendMessageCreator = (messageText: string) => ({type: SEND_MESSAGE, NewText: messageText} as const)
+
 
 export type postType = {
     id?: number
