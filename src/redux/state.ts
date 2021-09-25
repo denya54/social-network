@@ -1,8 +1,8 @@
-import React from "react";
 
 const ADD_POST = 'ADD-POST'
 const UPDATE_NEW_POST_TEXT ='UPDATE-NEW-POST-TEXT'
-const UPDATE_DIALOG_AREA_TEXT = 'UPDATE-DIALOG-AREA-TEXT'
+const UPDATE_NEW_MESSAGE_BODY = 'UPDATE-NEW-MESSAGE-BODY'
+const SEND_MESSAGE = 'SEND_MESSAGE'
 
 export type StoreType = {
     _state: stateType
@@ -15,7 +15,7 @@ export type StoreType = {
     changeDialogAreaText?: (NewText: string) => void
 
 }
-export type ActionType = AddPostActionType | UpdateNewPostTextType | UpdateDialogAreaTextType
+export type ActionType = AddPostActionType | UpdateNewPostTextType | UpdateNewMessageBodyType | SendMessageType
 
 // type AddPostActionType = {
 //     type: 'ADD-POST'
@@ -40,21 +40,9 @@ let store: StoreType = {
         },
         dialogsPage: {
             dialogNames: [
-                {
-                    id: 1,
-                    name: "Sharik",
-                    ava: "https://wallpaperim.net/_data/i/upload/2014/09/18/20140918448607-c935d187-me.jpg"
-                },
-                {
-                    id: 2,
-                    name: "Archi",
-                    ava: "https://f.vividscreen.info/soft/ecbda7af9f74e75f084553dbfbcdccff/Nice-Dog-Muzzle-640x480.jpg"
-                },
-                {
-                    id: 3,
-                    name: "Betty",
-                    ava: "https://scouteu.s3.amazonaws.com/cards/images_vt/merged/i_feel_so_lonely_without_you_1.jpg"
-                },
+                {id: 1, name: "Sharik", ava: "https://wallpaperim.net/_data/i/upload/2014/09/18/20140918448607-c935d187-me.jpg"},
+                {id: 2, name: "Archi", ava: "https://f.vividscreen.info/soft/ecbda7af9f74e75f084553dbfbcdccff/Nice-Dog-Muzzle-640x480.jpg"},
+                {id: 3, name: "Betty", ava: "https://scouteu.s3.amazonaws.com/cards/images_vt/merged/i_feel_so_lonely_without_you_1.jpg"},
                 {id: 4, name: "Tyzik", ava: "http://file.mobilmusic.ru/45/88/24/1369559-240.jpg"},
                 {id: 5, name: "Baron", ava: "https://i.ytimg.com/vi/S1C608GfriM/hqdefault.jpg"},
             ],
@@ -62,10 +50,10 @@ let store: StoreType = {
                 {id: 1, message: "Gav Gav"},
                 {id: 2, message: "RRRR"},
                 {id: 3, message: "Af Af"},
-                {id: 4, message: "AY"},
+                {id: 4, message: "AYYYYYYyyyy"},
                 {id: 5, message: "Tzyav"},
             ],
-            dialogArea: ""
+            newMessageBody: ""
         }
     },
     _callSubscriber() {
@@ -87,8 +75,13 @@ let store: StoreType = {
         } else if (action.type === UPDATE_NEW_POST_TEXT) {
             this._state.profilePage.newPostText = action.NewText
             this._callSubscriber(this._state)
-        } else if (action.type === UPDATE_DIALOG_AREA_TEXT) {
-            this._state.dialogsPage.dialogArea = action.NewText
+        } else if (action.type === UPDATE_NEW_MESSAGE_BODY) {
+            this._state.dialogsPage.newMessageBody = action.NewText
+            this._callSubscriber(this._state)
+        } else if(action.type === SEND_MESSAGE) {
+            let body = this._state.dialogsPage.newMessageBody
+            this._state.dialogsPage.newMessageBody = ""
+            this._state.dialogsPage.dialogMessages.push({id: 6, message: body},)
             this._callSubscriber(this._state)
         }
     },
@@ -104,13 +97,15 @@ export const updateNewPostTextActionCreator = (postText: string)  => {
     return {type: UPDATE_NEW_POST_TEXT, NewText: postText} as const
 }
 
-type UpdateDialogAreaTextType = ReturnType<typeof changeAreaMessageCreator>
-export const changeAreaMessageCreator = (messageText: string) => {
+type UpdateNewMessageBodyType = ReturnType<typeof updateNewMessageBodyCreator>
+export const updateNewMessageBodyCreator = (messageText: string) => {
     return {
-        type: UPDATE_DIALOG_AREA_TEXT,
+        type: UPDATE_NEW_MESSAGE_BODY,
         NewText: messageText
     } as const
 }
+type SendMessageType = ReturnType<typeof sendMessageCreator>
+export const sendMessageCreator = (messageText: string) => ({type: SEND_MESSAGE, NewText: messageText} as const)
 
 export type postType = {
     id?: number
@@ -137,7 +132,7 @@ export type dialogMessageType = {
 export type dialogsPageType = {
     dialogNames: Array<dialogNameType>
     dialogMessages: Array<dialogMessageType>
-    dialogArea: string
+    newMessageBody: string
 }
 
 export type stateType = {
