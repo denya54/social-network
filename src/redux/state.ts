@@ -1,3 +1,9 @@
+import React from "react";
+
+const ADD_POST = 'ADD-POST'
+const UPDATE_NEW_POST_TEXT ='UPDATE-NEW-POST-TEXT'
+const UPDATE_DIALOG_AREA_TEXT = 'UPDATE-DIALOG-AREA-TEXT'
+
 export type StoreType = {
     _state: stateType
     _callSubscriber: (state: stateType) => void
@@ -11,19 +17,16 @@ export type StoreType = {
 }
 export type ActionType = AddPostActionType | UpdateNewPostTextType | UpdateDialogAreaTextType
 
-type AddPostActionType = {
-    type: 'ADD-POST'
-    postMessage: string
-}
+// type AddPostActionType = {
+//     type: 'ADD-POST'
+//     postMessage: string
+// }
 
-type UpdateNewPostTextType = {
-    type: 'UPDATE-NEW-POST-TEXT'
-    NewText: string
-}
-type UpdateDialogAreaTextType = {
-    type: 'UPDATE-DIALOG-AREA-TEXT'
-    NewText: string
-}
+// type UpdateNewPostTextType = {
+//     type: 'UPDATE-NEW-POST-TEXT'
+//     NewText: string
+// }
+
 
 let store: StoreType = {
     _state: {
@@ -72,7 +75,7 @@ let store: StoreType = {
         return this._state
     },
     dispatch(action) {
-        if (action.type === 'ADD-POST') {
+        if (action.type === ADD_POST) {
             let newPost: postType = {
                 id: 4,
                 message: action.postMessage,
@@ -81,10 +84,10 @@ let store: StoreType = {
             this._state.profilePage.posts.push(newPost);
             this._state.profilePage.newPostText = ""
             this._callSubscriber(this._state)
-        } else if (action.type === 'UPDATE-NEW-POST-TEXT') {
+        } else if (action.type === UPDATE_NEW_POST_TEXT) {
             this._state.profilePage.newPostText = action.NewText
             this._callSubscriber(this._state)
-        } else if (action.type === 'UPDATE-DIALOG-AREA-TEXT') {
+        } else if (action.type === UPDATE_DIALOG_AREA_TEXT) {
             this._state.dialogsPage.dialogArea = action.NewText
             this._callSubscriber(this._state)
         }
@@ -92,6 +95,21 @@ let store: StoreType = {
     subscribe(observer: (state: stateType) => void) {
         this._callSubscriber = observer
     },
+}
+type AddPostActionType = ReturnType<typeof addPostActionCreator>
+type UpdateNewPostTextType = ReturnType<typeof updateNewPostTextActionCreator>
+
+export const addPostActionCreator = (postText: string) => ({type: ADD_POST, postMessage: postText} as const)
+export const updateNewPostTextActionCreator = (postText: string)  => {
+    return {type: UPDATE_NEW_POST_TEXT, NewText: postText} as const
+}
+
+type UpdateDialogAreaTextType = ReturnType<typeof changeAreaMessageCreator>
+export const changeAreaMessageCreator = (messageText: string) => {
+    return {
+        type: UPDATE_DIALOG_AREA_TEXT,
+        NewText: messageText
+    } as const
 }
 
 export type postType = {

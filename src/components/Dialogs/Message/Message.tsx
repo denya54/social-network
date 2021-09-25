@@ -1,7 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import {NavLink} from 'react-router-dom';
 import classes from './../Dialogs.module.css'
-import {ActionType, dialogMessageType} from "../../../redux/state";
+import {ActionType, changeAreaMessageCreator, dialogMessageType} from "../../../redux/state";
 
 type messagePropsType = {
     id: number
@@ -10,6 +10,7 @@ type messagePropsType = {
     dispatch: (action: ActionType) => void
 }
 
+
 const Message = (props: messagePropsType) => {
     let sendMessage = React.createRef<HTMLTextAreaElement>()
 
@@ -17,7 +18,7 @@ const Message = (props: messagePropsType) => {
         alert(sendMessage.current?.value)
     }
     let changeAreaMessage = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch({type: "UPDATE-DIALOG-AREA-TEXT", NewText: e.currentTarget.value})
+        props.dispatch(changeAreaMessageCreator(e.currentTarget.value))
     }
     return (
         <div className={classes.dialogMessage}>
