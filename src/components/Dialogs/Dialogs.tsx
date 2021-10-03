@@ -5,26 +5,33 @@ import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import {ActionType, dialogsPageType} from "../../redux/store";
 import {sendMessageCreator, updateNewMessageBodyCreator} from "../../redux/dialog-reducer";
+import {StoreType} from "../../redux/redux-store";
 
 type dialogsProps = {
-    state: dialogsPageType
-    dispatch: (action: ActionType) => void
+    updateNewMessageBody: (body: string)=> void
+    sendMessage: (body: string) => void
+    dialogsPage: dialogsPageType
+    // dispatch: (action: ActionType) => void
+    // store: StoreType
 }
 
 const Dialogs = (props: dialogsProps) => {
+    let state = props.dialogsPage
 
-    let dialogsElements = props.state.dialogNames.map(dN => <DialogItem name={dN.name} id={dN.id} ava={dN.ava}/>)
-    let messagesElements = props.state.dialogMessages.map(dM => <Message id={dM.id}
+    let dialogsElements = state.dialogNames.map(dN => <DialogItem name={dN.name} id={dN.id} ava={dN.ava}/>)
+    let messagesElements = state.dialogMessages.map(dM => <Message id={dM.id}
                                                                          message={dM.message}
-                                                                         dispatch={props.dispatch}
+                                                                         // dispatch={props.dispatch}
     />)
     let onSendMessageClick = () => {
-        props.dispatch(sendMessageCreator(newMessageBody))
+       // props.dispatch(sendMessageCreator(newMessageBody))
+        props.sendMessage(newMessageBody)
     }
     let onNewMessageChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(updateNewMessageBodyCreator(e.currentTarget.value))
+        // props.dispatch(updateNewMessageBodyCreator(e.currentTarget.value))
+        props.updateNewMessageBody(e.currentTarget.value)
     }
-    let newMessageBody = props.state.newMessageBody
+    let newMessageBody = state.newMessageBody
     return (
         <div className={classes.dialogs}>
             <div className={classes.dialogsNames}>

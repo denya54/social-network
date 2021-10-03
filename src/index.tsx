@@ -16,13 +16,10 @@ const renderEntireTree = (state: StoreType) => {
     );
 }
 
-// renderEntireTree (store.getState())
-// store.subscribe(renderEntireTree);
-
 renderEntireTree (store)
 
 store.subscribe(() => {
-    let state = store.getState();
+    // let state = store.getState();
     renderEntireTree(store)
 })
 

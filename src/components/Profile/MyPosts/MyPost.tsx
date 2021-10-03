@@ -2,15 +2,14 @@ import classes from './MyPost.module.css'
 import React, {ChangeEvent} from "react";
 import Post from "./Post1/Post";
 import {ActionType, postType} from "../../../redux/store";
-import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../redux/profile-reducer";
 
 type myPostProps = {
     newPostText: string
     statePosts: Array<postType>
-    dispatch: (action: ActionType) => void
+    addPost: (text: string) => void
+    updateNewPostText: (text: string) => void
+    dispatch?: (action: ActionType) => void
 }
-
-
 
 const MyPost = (props: myPostProps) => {
     let postsElement = props.statePosts.map(post => <Post message={post.message} likesCount={post.likesCount}/>)
@@ -18,14 +17,13 @@ const MyPost = (props: myPostProps) => {
     let newPostElement = React.createRef<HTMLTextAreaElement>();
 
     let addPostCallback = () => {
-        // props.dispatch({type: 'ADD-POST', postMessage: newPostElement.current ? newPostElement.current.value : ""} )
-        props.dispatch(addPostActionCreator(newPostElement.current ? newPostElement.current.value : ""));
-        // props.addPostCallback(newPostElement.current ? newPostElement.current.value : "")
+        props.addPost(newPostElement.current ? newPostElement.current.value : "")
+        // props.dispatch(addPostActionCreator(newPostElement.current ? newPostElement.current.value : ""));
     }
     let onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        // props.dispatch({type: 'UPDATE-NEW-POST-TEXT', NewText: e.currentTarget.value})
-        props.dispatch(updateNewPostTextActionCreator(e.currentTarget.value))
-        // props.changeAreaTextCallback(e.currentTarget.value)
+        let text = e.currentTarget.value
+        props.updateNewPostText(text)
+        // props.dispatch(updateNewPostTextActionCreator(e.currentTarget.value))
     }
 
     return (

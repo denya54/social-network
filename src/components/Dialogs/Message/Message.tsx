@@ -6,7 +6,7 @@ import {ActionType} from "../../../redux/store";
 type messagePropsType = {
     id: number
     message: string
-    dispatch: (action: ActionType) => void
+    // dispatch?: (action: ActionType) => void
 }
 
 
