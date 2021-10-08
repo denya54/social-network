@@ -6,6 +6,7 @@ import Message from "./Message/Message";
 import {ActionType, dialogsPageType} from "../../redux/store";
 import {sendMessageCreator, updateNewMessageBodyCreator} from "../../redux/dialog-reducer";
 import {StoreType} from "../../redux/redux-store";
+import {DialPropsType} from "./DialogsContainer";
 
 type dialogsProps = {
     updateNewMessageBody: (body: string)=> void
@@ -15,7 +16,7 @@ type dialogsProps = {
     // store: StoreType
 }
 
-const Dialogs = (props: dialogsProps) => {
+const Dialogs = (props: DialPropsType) => {
     let state = props.dialogsPage
 
     let dialogsElements = state.dialogNames.map(dN => <DialogItem name={dN.name} id={dN.id} ava={dN.ava}/>)

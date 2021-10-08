@@ -7,7 +7,9 @@ type profileProps = {
     store: StoreType
 }
 
-const Profile = (props: profileProps) => {
+const Profile = (
+    // props: profileProps
+) => {
     return (
         <div>
             <ProfileInfo/>
@@ -16,7 +18,9 @@ const Profile = (props: profileProps) => {
             {/*        newPostText={props.stateProfile.newPostText}*/}
             {/*/>*/}
 
-            <MyPostContainer store={props.store}/>
+            <MyPostContainer
+                // store={props.store}
+            />
         </div>
     )
 }

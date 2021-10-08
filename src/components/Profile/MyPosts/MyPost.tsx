@@ -2,16 +2,17 @@ import classes from './MyPost.module.css'
 import React, {ChangeEvent} from "react";
 import Post from "./Post1/Post";
 import {ActionType, postType} from "../../../redux/store";
+import {MyPostPropsType} from "./MyPostContainer";
 
-type myPostProps = {
-    newPostText: string
-    statePosts: Array<postType>
-    addPost: (text: string) => void
-    updateNewPostText: (text: string) => void
-    dispatch?: (action: ActionType) => void
-}
+// type myPostProps = {
+//     newPostText: string
+//     statePosts: Array<postType>
+//     addPost: (text: string) => void
+//     updateNewPostText: (text: string) => void
+//     dispatch?: (action: ActionType) => void
+// }
 
-const MyPost = (props: myPostProps) => {
+const MyPost = (props: MyPostPropsType) => {
     let postsElement = props.statePosts.map(post => <Post message={post.message} likesCount={post.likesCount}/>)
 
     let newPostElement = React.createRef<HTMLTextAreaElement>();
