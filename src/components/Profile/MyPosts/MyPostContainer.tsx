@@ -1,10 +1,10 @@
 import React, {ChangeEvent} from "react";
-import {addPostActionCreator, updateNewPostTextActionCreator} from "../../../redux/profile-reducer";
+import {addPostActionCreator, postType, updateNewPostTextActionCreator} from "../../../redux/profile-reducer";
 import MyPost from "./MyPost";
 import {StateType} from "../../../redux/redux-store";
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
-import {postType} from "../../../redux/store";
+
 
 // type myPostProps = {
 //     store: StoreType

@@ -1,9 +1,8 @@
 import React, {ChangeEvent} from 'react';
-import {sendMessageCreator, updateNewMessageBodyCreator} from "../../redux/dialog-reducer";
+import {dialogsPageType, sendMessageCreator, updateNewMessageBodyCreator} from "../../redux/dialog-reducer";
 import {StateType} from "../../redux/redux-store";
 import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
-import {dialogsPageType} from "../../redux/store";
 import {Dispatch} from "redux";
 
 // type dialogsProps = {
