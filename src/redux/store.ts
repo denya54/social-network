@@ -2,7 +2,7 @@ import profileReducer, {AddPostActionType, UpdateNewPostTextType} from "./profil
 import dialogReducer, {SendMessageType, UpdateNewMessageBodyType} from "./dialog-reducer";
 
 
-export type StoreType = {
+type StoreType = {
     _state: stateType
     _callSubscriber: (state: stateType) => void
     getState: () => stateType
@@ -73,35 +73,35 @@ let store: StoreType = {
 }
 
 
-export type postType = {
+type postType = {
     id?: number
     message: string
     likesCount: number
 }
 
-export type profilePageType = {
+type profilePageType = {
     posts: Array<postType>
     newPostText: string
 }
 
-export type dialogNameType = {
+type dialogNameType = {
     id: number
     name: string
     ava: string
 }
 
-export type dialogMessageType = {
+type dialogMessageType = {
     id: number
     message: string
 }
 
-export type dialogsPageType = {
+type dialogsPageType = {
     dialogNames: Array<dialogNameType>
     dialogMessages: Array<dialogMessageType>
     newMessageBody: string
 }
 
-export type stateType = {
+type stateType = {
     profilePage: profilePageType
     dialogsPage: dialogsPageType
     // sidebar: object

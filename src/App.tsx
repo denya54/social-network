@@ -5,15 +5,10 @@ import NavBar from "./components/NavBar/NavBar";
 import Profile from "./components/Profile/Profile";
 import {BrowserRouter, Route} from 'react-router-dom';
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import UsersContainer from "./components/Users/UsersContainer";
 
-// type stateProps = {
-//     state: StoreType
-// }
 
-const App = (
-    // props: stateProps
-) => {
-    // const state = props.state.getState()
+const App = () => {
     return (
         <BrowserRouter>
             <div className={'app-wraper'}>
@@ -21,11 +16,10 @@ const App = (
                 <NavBar/>
                 <div className={'app-wraper-content'}>
                     <Route path='/profile' render={() => <Profile
-                        // store={props.state}
                     />}/>
                     <Route path='/dialogs' render={() => <DialogsContainer
-                        // store={props.state}
                     />}/>
+                    <Route path='/users' render={() => <UsersContainer/>}/>
                     {/*<Route path='/news' component={News}/>*/}
                     {/*<Route path='/music' component={Music}/>*/}
                     {/*<Route path='/settings' component={Settings}/>*/}

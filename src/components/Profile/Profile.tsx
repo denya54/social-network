@@ -1,15 +1,11 @@
 import React from 'react';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostContainer from "./MyPosts/MyPostContainer";
-import {StoreType} from "../../redux/redux-store";
 
-type profileProps = {
-    store: StoreType
-}
 
-const Profile = (
-    // props: profileProps
-) => {
+
+
+const Profile = () => {
     return (
         <div>
             <ProfileInfo/>
@@ -18,9 +14,7 @@ const Profile = (
             {/*        newPostText={props.stateProfile.newPostText}*/}
             {/*/>*/}
 
-            <MyPostContainer
-                // store={props.store}
-            />
+            <MyPostContainer/>
         </div>
     )
 }

@@ -1,39 +1,10 @@
-import React, {ChangeEvent} from "react";
+import React from "react";
 import {addPostActionCreator, postType, updateNewPostTextActionCreator} from "../../../redux/profile-reducer";
 import MyPost from "./MyPost";
 import {StateType} from "../../../redux/redux-store";
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
 
-
-// type myPostProps = {
-//     store: StoreType
-// }
-
-// const MyPostContainer = (props: myPostProps) => {
-//     let state = props.store.getState()
-//     let addPostCallback = (text: string) => {
-//         props.store.dispatch(addPostActionCreator(text));
-//         // props.store.dispatch(addPostActionCreator(newPostElement.current ? newPostElement.current.value : ""));
-//     }
-//     let onPostChange = (text: string) => {
-//         let action = updateNewPostTextActionCreator(text)
-//         props.store.dispatch(action);
-//         //props.store.dispatch(updateNewPostTextActionCreator(e.currentTarget.value))
-//     }
-//     // let postsElement = props.store.statePosts.map(post => <Post message={post.message} likesCount={post.likesCount}/>)
-//
-//     return (
-//         <div>
-//             {/*<MyPost newPostText={} statePosts={} dispatch={}/>*/}
-//             <MyPost updateNewPostText={onPostChange}
-//                     addPost={addPostCallback}
-//                     statePosts={state.profilePage.posts}
-//                     newPostText={state.profilePage.newPostText}
-//             />
-//         </div>
-//     )
-// }
 
 export type MapDispatchReturnType = {
     updateNewPostText: (text: string) => void

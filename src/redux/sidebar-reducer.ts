@@ -1,4 +1,3 @@
-import {ActionType, stateType} from "./store";
 //
 // let initialState = {};
 //
@@ -9,3 +8,4 @@ import {ActionType, stateType} from "./store";
 //
 // }
 // export default sidebarReducer;
+export {}
