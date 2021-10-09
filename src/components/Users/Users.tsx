@@ -2,7 +2,6 @@ import React from 'react';
 import {UsersPropsType} from "./UsersContainer";
 import styles from './users.module.css'
 
-
 const Users = (props: UsersPropsType) => {
 if (props.users.length === 0) {
     props.setUsers([
