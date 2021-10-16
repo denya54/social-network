@@ -1,7 +1,7 @@
 import React from 'react';
 import {UsersPropsType} from "./UsersContainer";
 import styles from './users.module.css'
-import axios, {Axios, AxiosResponse} from "axios";
+import axios, {AxiosResponse} from "axios";
 import userPhoto from '../../../src/assets/images/sobaka.jpg'
 import {UserType} from "../../redux/users-reducer";
 
@@ -15,16 +15,18 @@ import {UserType} from "../../redux/users-reducer";
 // },
 
 const Users = (props: UsersPropsType) => {
-    if (props.users.length === 0) {
-        axios.get<void, AxiosResponse<{items: Array<UserType>}>>("https://social-network.samuraijs.com/api/1.0/users").then(response => {
-            props.setUsers(response.data.items)
-        })
+    let getUsers = () => {
+        if (props.users.length === 0) {
+            axios.get<void, AxiosResponse<{items: Array<UserType>}>>("https://social-network.samuraijs.com/api/1.0/users").then(response => {
+                props.setUsers(response.data.items)
+            })
+        }
     }
 
     return (
         <div>
-            {
-                props.users.map(us => <div key={us.id}>
+            <button onClick={getUsers}>Get Users</button>
+            {props.users.map(us => <div key={us.id}>
                     <span>
                         <div>
                             <img src={us.photos.small != null ? us.photos.small : userPhoto} className={styles.userPhoto}/>
