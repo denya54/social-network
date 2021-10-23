@@ -1,7 +1,6 @@
 import React from 'react';
 import {connect} from "react-redux";
 import {StateType} from "../../redux/redux-store";
-import {Dispatch} from "redux";
 import axios, {AxiosResponse} from "axios";
 import {Users} from "./Users";
 import {
@@ -63,28 +62,28 @@ let mapStateToProps = (state: StateType): MapStatePropsReturnType => {
         isFetching: state.usersPage.isFetching
     }
 }
-let mapDispatchToProps = (dispatch: Dispatch) : MapDispatchReturnType => {
-    return {
-        follow: (userID: number) => {
-            dispatch (followAC(userID))
-        },
-        unfollow: (userID: number) => {
-            dispatch (unFollowAC(userID))
-        },
-        setUsers: (users: Array<UserType>) => {
-            dispatch(setUsersAC(users))
-        },
-        setCurrentPage: (pageNumber: number) => {
-            dispatch(setCurrentPageAC(pageNumber))
-        },
-        setTotalUsersCount: (totalCount: number) => {
-            dispatch(setTotalUsersCountAC(totalCount))
-        },
-        toggleIsFetching: (isFetching: boolean) => {
-            dispatch(toggleIsFetching(isFetching))
-        }
-    }
-}
+// let mapDispatchToProps = (dispatch: Dispatch) : MapDispatchReturnType => {
+//     return {
+//         follow: (userID: number) => {
+//             dispatch (followAC(userID))
+//         },
+//         unfollow: (userID: number) => {
+//             dispatch (unFollowAC(userID))
+//         },
+//         setUsers: (users: Array<UserType>) => {
+//             dispatch(setUsersAC(users))
+//         },
+//         setCurrentPage: (pageNumber: number) => {
+//             dispatch(setCurrentPageAC(pageNumber))
+//         },
+//         setTotalUsersCount: (totalCount: number) => {
+//             dispatch(setTotalUsersCountAC(totalCount))
+//         },
+//         toggleIsFetching: (isFetching: boolean) => {
+//             dispatch(toggleIsFetching(isFetching))
+//         }
+//     }
+// }
 type MapDispatchReturnType = {
     follow: (userID: number) => void
     unfollow: (userID: number) => void
@@ -104,4 +103,11 @@ type MapStatePropsReturnType = {
 
 export type UsersPropsType = MapDispatchReturnType & MapStatePropsReturnType
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer)
+export default connect(mapStateToProps, {
+    follow: followAC,
+    unfollow: unFollowAC,
+    setUsers: setUsersAC,
+    setCurrentPage: setCurrentPageAC,
+    setTotalUsersCount: setTotalUsersCountAC,
+    toggleIsFetching: toggleIsFetching
+    })(UsersContainer)
