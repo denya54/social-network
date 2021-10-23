@@ -84,6 +84,8 @@ let mapStateToProps = (state: StateType): MapStatePropsReturnType => {
 //         }
 //     }
 // }
+
+
 type MapDispatchReturnType = {
     follow: (userID: number) => void
     unfollow: (userID: number) => void

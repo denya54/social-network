@@ -14,4 +14,5 @@ export type StoreType = typeof store
 
 let store = createStore(reducers);
 
+
 export default store;
