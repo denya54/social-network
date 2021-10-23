@@ -7,9 +7,7 @@ type ProfilePropsType = {
     profile: UserProfileType | null
 }
 
-const Profile = (
-    props: ProfilePropsType
-) => {
+const Profile = (props: ProfilePropsType) => {
     return (
         <div>
             <ProfileInfo
