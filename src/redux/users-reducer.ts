@@ -27,6 +27,7 @@ export type UsersType = {
     totalUsersCount: number
     currentPage: number
     isFetching: boolean
+    followingInProgress: Array<any>
 }
 
 const FOLLOW = 'FOLLOW'
@@ -35,13 +36,15 @@ const SET_USERS = 'SET-USERS'
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE'
 const SET_TOTAL_USERS_COUNT = 'SET-TOTAL-USERS-COUNT'
 const TOGGLE_IS_FETCHING = 'TOGGLE-IS-FETCHING'
+const TOGGLE_IS_FOLLOWING_PROGRESS = 'TOGGLE_IS_FOLLOWING_PROGRESS'
 
 let initialState: UsersType = {
     users: [],
     pageSize: 10,
     totalUsersCount: 15368,
     currentPage: 1,
-    isFetching: false
+    isFetching: false,
+    followingInProgress: []
 }
 
 const usersReducer = (state: UsersType = initialState, action: ActionUserType): UsersType => {
@@ -72,6 +75,13 @@ const usersReducer = (state: UsersType = initialState, action: ActionUserType): 
                 return {
                 ...state, isFetching: action.isFetching
                 }
+        case TOGGLE_IS_FOLLOWING_PROGRESS:
+            return {
+                ...state,
+                followingInProgress: action.isFetching
+                    ? [...state.followingInProgress, action.userId]
+                    : [...state.followingInProgress.filter(userId => userId != action.userId)]
+        }
         default:
             return state
     }
@@ -83,6 +93,7 @@ export const setUsersAC = (users: Array<UserType>) => ({type: 'SET-USERS', users
 export const setCurrentPageAC = (pageNumber: number) => ({type: 'SET-CURRENT-PAGE', pageNumber} as const)
 export const setTotalUsersCountAC = (totalCount: number) => ({type: 'SET-TOTAL-USERS-COUNT', totalCount} as const)
 export const toggleIsFetching = (isFetching: boolean) => ({type: 'TOGGLE-IS-FETCHING', isFetching} as const)
+export const followingProgressAC = (isFetching: boolean, userId: number) => ({type: 'TOGGLE_IS_FOLLOWING_PROGRESS', isFetching, userId} as const)
 
 export type followACReturnType = ReturnType<typeof followAC>
 export type unFollowACReturnType = ReturnType<typeof unFollowAC>
@@ -90,9 +101,10 @@ export type setUsersACReturnType = ReturnType<typeof setUsersAC>
 export type setCurrentReturnType = ReturnType<typeof setCurrentPageAC>
 export type setTotalUsersCountReturnType = ReturnType<typeof setTotalUsersCountAC>
 export type toggleIsFetchingReturnType = ReturnType<typeof toggleIsFetching>
+export type followingProgressReturnType = ReturnType<typeof followingProgressAC>
 
 type ActionUserType = followACReturnType | unFollowACReturnType | setUsersACReturnType |
-    setCurrentReturnType | setTotalUsersCountReturnType | toggleIsFetchingReturnType
+    setCurrentReturnType | setTotalUsersCountReturnType | toggleIsFetchingReturnType | followingProgressReturnType
 
 
 
