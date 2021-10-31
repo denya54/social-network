@@ -1,26 +1,4 @@
 
-// export type locationType = {
-//     city: string
-//     country: string
-// }
-//
-// export type photosType = {
-//     small: string | null
-//     large: string | null
-// }
-//
-// export type UserType = {
-//     name: string
-//     id: number
-//     uniqueUrlName: string | null
-//     photos: photosType
-//     status: string
-//     followed: boolean
-//     //
-//     photoUrl?: string
-//     location?: locationType
-// }
-
 export type AuthType = {
     id: number | null,
     email: string | null,
