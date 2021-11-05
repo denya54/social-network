@@ -1,3 +1,4 @@
+import {userAPI} from "../api/api";
 
 export type locationType = {
     city: string
@@ -72,16 +73,16 @@ const usersReducer = (state: UsersType = initialState, action: ActionUserType): 
                 ...state, totalUsersCount: action.totalCount
             }
         case TOGGLE_IS_FETCHING:
-                return {
+            return {
                 ...state, isFetching: action.isFetching
-                }
+            }
         case TOGGLE_IS_FOLLOWING_PROGRESS:
             return {
                 ...state,
                 followingInProgress: action.isFetching
                     ? [...state.followingInProgress, action.userId]
                     : [...state.followingInProgress.filter(userId => userId != action.userId)]
-        }
+            }
         default:
             return state
     }
@@ -93,7 +94,11 @@ export const setUsersAC = (users: Array<UserType>) => ({type: 'SET-USERS', users
 export const setCurrentPageAC = (pageNumber: number) => ({type: 'SET-CURRENT-PAGE', pageNumber} as const)
 export const setTotalUsersCountAC = (totalCount: number) => ({type: 'SET-TOTAL-USERS-COUNT', totalCount} as const)
 export const toggleIsFetching = (isFetching: boolean) => ({type: 'TOGGLE-IS-FETCHING', isFetching} as const)
-export const followingProgressAC = (isFetching: boolean, userId: number) => ({type: 'TOGGLE_IS_FOLLOWING_PROGRESS', isFetching, userId} as const)
+export const followingProgressAC = (isFetching: boolean, userId: number) => ({
+    type: 'TOGGLE_IS_FOLLOWING_PROGRESS',
+    isFetching,
+    userId
+} as const)
 
 export type followACReturnType = ReturnType<typeof followAC>
 export type unFollowACReturnType = ReturnType<typeof unFollowAC>
@@ -107,6 +112,45 @@ type ActionUserType = followACReturnType | unFollowACReturnType | setUsersACRetu
     setCurrentReturnType | setTotalUsersCountReturnType | toggleIsFetchingReturnType | followingProgressReturnType
 
 
+export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
+    return (dispatch: any) => {
 
+    dispatch(toggleIsFetching(true))
+    userAPI.getUsers(currentPage, pageSize).then(data => {
+        dispatch(toggleIsFetching(false))
+        // dispatch(setUsers(data.items))
+        dispatch(setUsersAC(data.items))
+        dispatch(setTotalUsersCountAC(data.totalCount))
+        // dispatch(setTotalUsersCount(data.totalCount))
+    })
+}}
+
+export const followThunk = (userId: number) => {
+    return (dispatch: any) => {
+
+        dispatch(followingProgressAC(true, userId))
+        userAPI.follow(userId)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(followAC(userId))
+                }
+                dispatch(followingProgressAC(false, userId))
+            })
+    }
+}
+
+export const unFollowThunk = ( userId: number) => {
+    return (dispatch: any) => {
+
+        dispatch(followingProgressAC(true, userId))
+        userAPI.unfollow(userId)
+            .then(response => {
+                if (response.data.resultCode === 0) {
+                    dispatch(unFollowAC(userId))
+                }
+                dispatch(followingProgressAC(false, userId))
+            })
+    }
+}
 
 export default usersReducer;
