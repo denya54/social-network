@@ -1,11 +1,10 @@
 import React, {ChangeEvent} from 'react';
-import {NavLink} from 'react-router-dom';
 import classes from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
-
 import {DialPropsType} from "./DialogsContainer";
 import {dialogsPageType} from "../../redux/dialog-reducer";
+import {Redirect} from "react-router-dom";
 
 type dialogsProps = {
     updateNewMessageBody: (body: string) => void
@@ -32,6 +31,11 @@ const Dialogs = (props: DialPropsType) => {
         props.updateNewMessageBody(e.currentTarget.value)
     }
     let newMessageBody = state.newMessageBody
+
+    if (!props.isAuth) return <Redirect to={'/login'}/>
+        
+
+
     return (
         <div className={classes.dialogs}>
             <div className={classes.dialogsNames}>

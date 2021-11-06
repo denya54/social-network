@@ -5,11 +5,15 @@ import Dialogs from "./Dialogs";
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
 
-type MapStatePropsReturnType = { dialogsPage: dialogsPageType }
+type MapStatePropsReturnType = {
+    dialogsPage: dialogsPageType
+    isAuth: boolean
+}
 
 let mapStateToProps = (state: StateType): MapStatePropsReturnType => {
     return {
-        dialogsPage: state.dialogsPage
+        dialogsPage: state.dialogsPage,
+        isAuth: state.auth.isAuth
     }
 }
 
