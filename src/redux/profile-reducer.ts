@@ -1,4 +1,5 @@
 import {ActionType} from "./store";
+import {userAPI} from "../api/api";
 
 export type contactsType = {
     facebook: string | null
@@ -87,4 +88,13 @@ export const updateNewPostTextActionCreator = (postText: string) => {
     return {type: UPDATE_NEW_POST_TEXT, NewText: postText} as const
 }
 export const setUserProfileAC = (profile: UserProfileType) => ({type: SET_USER_PROFILE, profile} as const)
+
+
+export const getUserProfileThunk = (userId: string) => (dispatch: any) => {
+    userAPI.getProfile(userId)
+        .then(response => {
+            dispatch(setUserProfileAC(response.data))
+        })
+}
 export default profileReducer;
+

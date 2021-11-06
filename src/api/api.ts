@@ -1,5 +1,7 @@
 import axios, {AxiosResponse} from "axios";
 import {UserType} from "../redux/users-reducer";
+import {UserProfileType} from "../redux/profile-reducer";
+import {AuthType} from "../redux/auth-reducer";
 
 const instance = axios.create({
     withCredentials: true,
@@ -13,10 +15,19 @@ export const userAPI = {
             .then(response => response.data)
     },
     follow (userId: number) {
-        return instance.post<void, AxiosResponse<{ items: Array<UserType>, resultCode: number }>>(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`)
+        return instance.post<void, AxiosResponse<{ items: Array<UserType>, resultCode: number }>>(`follow/${userId}`)
     },
     unfollow (userId: number) {
-       return instance.delete<void, AxiosResponse<{ items: Array<UserType>, resultCode: number }>>(`https://social-network.samuraijs.com/api/1.0/follow/${userId}`)
-        }
+       return instance.delete<void, AxiosResponse<{ items: Array<UserType>, resultCode: number }>>(`follow/${userId}`)
+        },
+    getProfile: (userId: string) => {
+        return instance.get<void, AxiosResponse<UserProfileType>>(`profile/` + userId)
+            }
+    }
+
+export const authAPI = {
+   me() {
+       return instance.get<void, AxiosResponse<{ data: AuthType, resultCode: number }>>(`auth/me`)
+   }
 }
 
