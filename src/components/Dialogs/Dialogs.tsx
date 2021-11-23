@@ -32,7 +32,7 @@ const Dialogs = (props: DialPropsType) => {
     }
     let newMessageBody = state.newMessageBody
 
-    if (!props.isAuth) return <Redirect to={'/login'}/>
+    // if (!props.isAuth) return <Redirect to={'/login'}/>
         
 
 

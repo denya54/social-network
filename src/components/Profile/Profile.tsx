@@ -17,7 +17,6 @@ const Profile = (props: ProfilePropsType) => {
             {/*        dispatch={props.dispatch}*/}
             {/*        newPostText={props.stateProfile.newPostText}*/}
             {/*/>*/}
-
             <MyPostContainer/>
         </div>
     )

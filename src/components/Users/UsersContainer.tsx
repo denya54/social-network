@@ -11,6 +11,7 @@ import {
     UserType, getUsersThunkCreator, followThunk, unFollowThunk
 } from "../../redux/users-reducer";
 import {Preloader} from "../common/Preloader/Preloader";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 
 
@@ -97,8 +98,10 @@ export type UsersContainerPropsType = MapDispatchReturnType & MapStatePropsRetur
 
 //
 
+// let withRedirect = withAuthRedirect(UsersContainer)
 
-export default connect(mapStateToProps, {
+
+export default withAuthRedirect (connect(mapStateToProps, {
     follow: followAC,
     unfollow: unFollowAC,
     followWithThunk: followThunk,
@@ -109,4 +112,4 @@ export default connect(mapStateToProps, {
     toggleIsFetching: toggleIsFetching,
     toggleIsFollowingInProgress: followingProgressAC,
     getUsersWithThunk: getUsersThunkCreator
-})(UsersContainer)
+})(UsersContainer))
