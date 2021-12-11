@@ -2,7 +2,12 @@ import React from 'react';
 import Profile from "./Profile";
 import {connect} from "react-redux";
 import {StateType} from "../../redux/redux-store";
-import {getUserProfileThunk, postType, UserProfileType} from "../../redux/profile-reducer";
+import {
+    getStatusThunk,
+    getUserProfileThunk,
+    postType, updateStatusThunk,
+    UserProfileType
+} from "../../redux/profile-reducer";
 import { RouteComponentProps, withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
@@ -20,9 +25,10 @@ class ProfileContainer extends React.Component <PropsType> {
 
         let userId = this.props.match.params.userId
         if (!userId) {
-            userId = '2'
+            userId = '20162'
         }
-        this.props.getUserProfileWithThunk(userId)
+        this.props.getUserProfileWithThunk(userId);
+        this.props.getStatusWithThunk(userId)
     }
 
     render() {
@@ -32,6 +38,8 @@ class ProfileContainer extends React.Component <PropsType> {
             <Profile
                 {...this.props}
                 profile={this.props.profile}
+                status={this.props.status}
+                updateStatus={this.props.updateStatusWithThunk}
             />
         )
     }
@@ -45,17 +53,21 @@ let mapStateToProps = (state: StateType): MapStatePropsReturnType => ({
     profile: state.profilePage.profile,
     newPostText: state.profilePage.newPostText,
     posts: state.profilePage.posts,
+    status: state.profilePage.status
 })
 
 type MapDispatchPropsReturnType = {
     // setUserProfile: (profile: UserProfileType) => void
     getUserProfileWithThunk: (userId: string) => void
+    getStatusWithThunk: (userId: string) => void
+    updateStatusWithThunk: (status: string) => void
 }
 
 type MapStatePropsReturnType = {
     posts: Array<postType>
     newPostText: string
     profile: UserProfileType | null
+    status: string
     // isAuth: boolean
 }
 
@@ -70,7 +82,9 @@ export type ProfilePropsType = MapDispatchPropsReturnType & MapStatePropsReturnT
 
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {
-        getUserProfileWithThunk: getUserProfileThunk
+        getUserProfileWithThunk: getUserProfileThunk,
+        getStatusWithThunk: getStatusThunk,
+        updateStatusWithThunk: updateStatusThunk
     }),
     withRouter,
     withAuthRedirect

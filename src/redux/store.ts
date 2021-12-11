@@ -1,5 +1,5 @@
 import profileReducer, {
-    AddPostActionType,
+    AddPostActionType, SetStatusReturnType,
     SetUserProfileReturnType,
     UpdateNewPostTextType,
     UserProfileType
@@ -18,7 +18,8 @@ type StoreType = {
     changeDialogAreaText?: (NewText: string) => void
 
 }
-export type ActionType = AddPostActionType | UpdateNewPostTextType | UpdateNewMessageBodyType | SendMessageType | SetUserProfileReturnType
+export type ActionType = AddPostActionType | UpdateNewPostTextType | UpdateNewMessageBodyType |
+    SendMessageType | SetUserProfileReturnType | SetStatusReturnType
 
 // type AddPostActionType = {
 //     type: 'ADD-POST'
@@ -40,7 +41,8 @@ let store: StoreType = {
                 {id: 2, message: "Don`t like Myay", likesCount: 10},
                 {id: 3, message: "How do you do", likesCount: 16},
             ],
-            profile: null
+            profile: null,
+            status: ''
         },
         dialogsPage: {
             dialogNames: [
@@ -89,6 +91,7 @@ type profilePageType = {
     posts: Array<postType>
     newPostText: string
     profile: UserProfileType | null
+    status: string
 }
 
 type dialogNameType = {

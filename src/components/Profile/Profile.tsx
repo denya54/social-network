@@ -5,6 +5,8 @@ import {UserProfileType} from "../../redux/profile-reducer";
 
 type ProfilePropsType = {
     profile: UserProfileType | null
+    status: string
+    updateStatus: (status: string) => void
 }
 
 const Profile = (props: ProfilePropsType) => {
@@ -12,6 +14,8 @@ const Profile = (props: ProfilePropsType) => {
         <div>
             <ProfileInfo
                 profile={props.profile}
+                status={props.status}
+                updateStatus={props.updateStatus}
             />
             {/*<MyPost statePosts={props.stateProfile.posts}*/}
             {/*        dispatch={props.dispatch}*/}

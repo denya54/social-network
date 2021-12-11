@@ -1,6 +1,6 @@
 import axios, {AxiosResponse} from "axios";
 import {UserType} from "../redux/users-reducer";
-import {UserProfileType} from "../redux/profile-reducer";
+import {profileStatusType, UserProfileType} from "../redux/profile-reducer";
 import {AuthType} from "../redux/auth-reducer";
 
 const instance = axios.create({
@@ -21,13 +21,31 @@ export const userAPI = {
        return instance.delete<void, AxiosResponse<{ items: Array<UserType>, resultCode: number }>>(`follow/${userId}`)
         },
     getProfile: (userId: string) => {
-        return instance.get<void, AxiosResponse<UserProfileType>>(`profile/` + userId)
+        console.warn('Use profileApi')
+        return profileAPI.getProfile(userId)
+        // return instance.get<void, AxiosResponse<UserProfileType>>(`profile/` + userId)
             }
     }
+
+export const profileAPI = {
+    getProfile: (userId: string) => {
+        return instance.get<void, AxiosResponse<UserProfileType>>(`profile/` + userId)
+    },
+
+    getStatus: (userId: string) => {
+        return instance.get<void, AxiosResponse<string>>(`profile/status/` + userId)
+    },
+
+    updateStatus: (newStatus: string) => {
+        return instance.put<void, AxiosResponse<profileStatusType>>(`profile/status`, {status: newStatus})
+    }
+}
 
 export const authAPI = {
    me() {
        return instance.get<void, AxiosResponse<{ data: AuthType, resultCode: number }>>(`auth/me`)
    }
 }
+
+
 
