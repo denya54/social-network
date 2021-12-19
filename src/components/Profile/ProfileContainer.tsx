@@ -51,7 +51,7 @@ class ProfileContainer extends React.Component <PropsType> {
 
 let mapStateToProps = (state: StateType): MapStatePropsReturnType => ({
     profile: state.profilePage.profile,
-    newPostText: state.profilePage.newPostText,
+    // newPostText: state.profilePage.newPostText,
     posts: state.profilePage.posts,
     status: state.profilePage.status
 })
@@ -65,7 +65,7 @@ type MapDispatchPropsReturnType = {
 
 type MapStatePropsReturnType = {
     posts: Array<postType>
-    newPostText: string
+    // newPostText: string
     profile: UserProfileType | null
     status: string
     // isAuth: boolean

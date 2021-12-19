@@ -8,6 +8,7 @@ type FormDataType = {
 }
 
 export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
+    debugger
     return (
         <form onSubmit={props.handleSubmit}>
             <div><Field placeholder={'Login'} component={'input'} name={'login'}/></div>
