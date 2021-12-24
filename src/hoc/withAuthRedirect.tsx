@@ -3,9 +3,7 @@ import {Redirect} from "react-router-dom";
 import {connect} from "react-redux";
 import {StateType} from "../redux/redux-store";
 
-type MapStatePropsType = {
-    isAuth: boolean
-}
+type MapStatePropsType = { isAuth: boolean }
 
 const mapStateToProps = (state: StateType): MapStatePropsType => {
     return {

@@ -44,7 +44,14 @@ export const profileAPI = {
 export const authAPI = {
    me() {
        return instance.get<void, AxiosResponse<{ data: AuthType, resultCode: number }>>(`auth/me`)
-   }
+   },
+    login(email: string, password: string, rememberMe: boolean = false) {
+       return instance.post<void, AxiosResponse<{resultCode: number, messages: Array<string>, data: {userID: number}}>>(`auth/login`,
+           {email, password, rememberMe})
+    },
+    logout() {
+       return instance.delete<void, AxiosResponse<{resultCode: number, messages: Array<string>, data: object}>>(`auth/login`)
+    }
 }
 
 

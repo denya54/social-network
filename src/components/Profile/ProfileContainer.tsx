@@ -45,16 +45,19 @@ class ProfileContainer extends React.Component <PropsType> {
     }
 }
 
-
-
 // let AuthRedirectComponent = withAuthRedirect(ProfileContainer)
 
 let mapStateToProps = (state: StateType): MapStatePropsReturnType => ({
     profile: state.profilePage.profile,
-    // newPostText: state.profilePage.newPostText,
     posts: state.profilePage.posts,
     status: state.profilePage.status
 })
+
+type MapStatePropsReturnType = {
+    posts: Array<postType>
+    profile: UserProfileType | null
+    status: string
+}
 
 type MapDispatchPropsReturnType = {
     // setUserProfile: (profile: UserProfileType) => void
@@ -63,22 +66,8 @@ type MapDispatchPropsReturnType = {
     updateStatusWithThunk: (status: string) => void
 }
 
-type MapStatePropsReturnType = {
-    posts: Array<postType>
-    // newPostText: string
-    profile: UserProfileType | null
-    status: string
-    // isAuth: boolean
-}
 
 export type ProfilePropsType = MapDispatchPropsReturnType & MapStatePropsReturnType
-
-// let WithURLDataContainerComponent = withRouter(AuthRedirectComponent);
-
-// export default connect(mapStateToProps, {
-//     // setUserProfile: setUserProfileAC,
-//     getUserProfileWithThunk: getUserProfileThunk
-// })(WithURLDataContainerComponent);
 
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {
