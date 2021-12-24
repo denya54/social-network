@@ -30,6 +30,8 @@ type PropsType = {
     loginTC:  (email: string, password: string, rememberMe: boolean) => void
 }
 
+
+
 export const Login = (props: PropsType) => {
 
 const onSubmit = (formData: FormDataType) => {
@@ -63,21 +65,25 @@ type MapDispatchPropsReturnType = {
 
 type LoginPropsType = MapDispatchPropsReturnType & MapStatePropsReturnType
 
-class LoginContainer extends React.Component <LoginPropsType> {
-    render() {
-        return (
-            <Login isAuth={this.props.isAuth}
-                   loginTC={this.props.loginTC}
-            />
-        )
-    }
-
+// функциональная
+const LoginContainer: React.FC<LoginPropsType> = ({isAuth, loginTC}) => {
+    return (
+        <Login isAuth={isAuth}
+               loginTC={loginTC}
+        />
+    )
 }
 
-export default connect(mapStateToProps, {loginTC})(LoginContainer)
-
-
-
-// const LoginContainer = () => {
-//     return <Login/>
+//классовая
+// class LoginContainer extends React.Component <LoginPropsType> {
+//     render() {
+//         return (
+//             <Login isAuth={this.props.isAuth}
+//                    loginTC={this.props.loginTC}
+//             />
+//         )
+//     }
+//
 // }
+
+export default connect(mapStateToProps, {loginTC})(LoginContainer)
