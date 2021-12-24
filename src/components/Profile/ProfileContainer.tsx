@@ -50,13 +50,18 @@ class ProfileContainer extends React.Component <PropsType> {
 let mapStateToProps = (state: StateType): MapStatePropsReturnType => ({
     profile: state.profilePage.profile,
     posts: state.profilePage.posts,
-    status: state.profilePage.status
+    status: state.profilePage.status,
+    authorisedUserID: state.auth.id,
+    isAuth: state.auth.isAuth
+
 })
 
 type MapStatePropsReturnType = {
     posts: Array<postType>
     profile: UserProfileType | null
     status: string
+    authorisedUserID: string | null
+    isAuth: boolean
 }
 
 type MapDispatchPropsReturnType = {
