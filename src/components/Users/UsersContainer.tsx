@@ -110,6 +110,5 @@ export default compose<React.ComponentType>(
         toggleIsFetching: toggleIsFetching,
         toggleIsFollowingInProgress: followingProgressAC,
         getUsersWithThunk: getUsersThunkCreator
-    }),
-    withAuthRedirect
+    })
 )(UsersContainer)

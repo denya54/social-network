@@ -8,7 +8,7 @@ import {
     postType, updateStatusThunk,
     UserProfileType
 } from "../../redux/profile-reducer";
-import { RouteComponentProps, withRouter} from "react-router-dom";
+import {RouteComponentProps, withRouter} from "react-router-dom";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {compose} from "redux";
 
@@ -25,7 +25,10 @@ class ProfileContainer extends React.Component <PropsType> {
 
         let userId = this.props.match.params.userId
         if (!userId) {
-            userId = '20162'
+            userId = '20162' //this.props.authorisedUserID
+            if (!userId) {
+                this.props.history.push('/login')
+            }
         }
         this.props.getUserProfileWithThunk(userId);
         this.props.getStatusWithThunk(userId)
@@ -66,8 +69,8 @@ type MapStatePropsReturnType = {
 
 type MapDispatchPropsReturnType = {
     // setUserProfile: (profile: UserProfileType) => void
-    getUserProfileWithThunk: (userId: string) => void
-    getStatusWithThunk: (userId: string) => void
+    getUserProfileWithThunk: (userId: string ) => void
+    getStatusWithThunk: (userId: string)  => void
     updateStatusWithThunk: (status: string) => void
 }
 

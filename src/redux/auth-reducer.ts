@@ -40,7 +40,7 @@ export const setAuthUserData = (userID: string | null, email: string | null, log
 export type setAuthUserDataACReturnType = ReturnType<typeof setAuthUserData>
 
 export const getAuthUserDataThunk = () => (dispatch: Dispatch) => {
-    authAPI.me()
+   return authAPI.me()
         .then(response => {
             if (response.data.resultCode === 0) {
                 // деструктуризация

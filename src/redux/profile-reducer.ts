@@ -23,7 +23,7 @@ export type UserProfileType = {
     lookingForAJob: boolean
     lookingForAJobDescription: string
     fullName: string
-    userId: number
+    userId: string
     photos: photosType
 }
 
