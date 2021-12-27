@@ -112,18 +112,19 @@ type ActionUserType = followACReturnType | unFollowACReturnType | setUsersACRetu
     setCurrentReturnType | setTotalUsersCountReturnType | toggleIsFetchingReturnType | followingProgressReturnType
 
 
-export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
+export const requestUsersThunkCreator = (currentPage: number, pageSize: number) => {
     return (dispatch: any) => {
-
-    dispatch(toggleIsFetching(true))
-    userAPI.getUsers(currentPage, pageSize).then(data => {
-        dispatch(toggleIsFetching(false))
-        // dispatch(setUsers(data.items))
-        dispatch(setUsersAC(data.items))
-        dispatch(setTotalUsersCountAC(data.totalCount))
-        // dispatch(setTotalUsersCount(data.totalCount))
-    })
-}}
+        dispatch(toggleIsFetching(true))
+        dispatch(setCurrentPageAC(currentPage))
+        userAPI.getUsers(currentPage, pageSize).then(data => {
+            dispatch(toggleIsFetching(false))
+            // dispatch(setUsers(data.items))
+            dispatch(setUsersAC(data.items))
+            dispatch(setTotalUsersCountAC(data.totalCount))
+            // dispatch(setTotalUsersCount(data.totalCount))
+        })
+    }
+}
 
 export const followThunk = (userId: number) => {
     return (dispatch: any) => {
@@ -139,7 +140,7 @@ export const followThunk = (userId: number) => {
     }
 }
 
-export const unFollowThunk = ( userId: number) => {
+export const unFollowThunk = (userId: number) => {
     return (dispatch: any) => {
 
         dispatch(followingProgressAC(true, userId))

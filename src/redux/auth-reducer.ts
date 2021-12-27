@@ -3,7 +3,7 @@ import {Dispatch} from "redux";
 import {stopSubmit} from "redux-form";
 
 export type AuthType = {
-    id: string | null,
+    id: string,
     email: string | null,
     login: string | null,
     isAuth: boolean
@@ -14,7 +14,7 @@ const SET_USER_DATA = 'SET_USER_DATA'
 
 
 let initialState: AuthType = {
-    id: null,
+    id: '20162',
     email: null,
     login: null,
     isAuth: false

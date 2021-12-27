@@ -25,7 +25,8 @@ class ProfileContainer extends React.Component <PropsType> {
 
         let userId = this.props.match.params.userId
         if (!userId) {
-            userId = '20162' //this.props.authorisedUserID
+           // '20162'
+            userId =  this.props.authorisedUserID
             if (!userId) {
                 this.props.history.push('/login')
             }
@@ -63,7 +64,7 @@ type MapStatePropsReturnType = {
     posts: Array<postType>
     profile: UserProfileType | null
     status: string
-    authorisedUserID: string | null
+    authorisedUserID: string
     isAuth: boolean
 }
 
