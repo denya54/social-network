@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 
 type ProfileStatusPropsType = {
     status: string
@@ -6,6 +6,10 @@ type ProfileStatusPropsType = {
 }
 
 const ProfileStatus = (props: ProfileStatusPropsType) => {
+
+    useEffect(() => {
+        setStatus(props.status)
+    },[props.status])
 
     const [status, setStatus] = useState(props.status)
 
