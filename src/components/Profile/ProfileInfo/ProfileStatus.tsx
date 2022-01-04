@@ -16,14 +16,18 @@ const ProfileStatus = (props: ProfileStatusPropsType) => {
     const deActivateEditMode = () => {
         setEditMode(false)
         props.updateStatus(status)
-
     }
+
     const activateEditMode = () => setEditMode(true)
 
     return (
         <div>
             {editMode
-                ? <div><input value={status} onChange={(e)=>changeStatus(e)} onBlur={deActivateEditMode} autoFocus/></div>
+                ? <div><input value={status}
+                              onChange={(e) => changeStatus(e)}
+                              onBlur={deActivateEditMode}
+                              autoFocus/>
+                </div>
                 : <div><span onDoubleClick={activateEditMode}>{status || 'No status'}</span></div>
             }
         </div>)
