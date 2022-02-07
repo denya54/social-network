@@ -21,7 +21,6 @@ export const userAPI = {
        return instance.delete<void, AxiosResponse<{ items: Array<UserType>, resultCode: number }>>(`follow/${userId}`)
         },
     getProfile: (userId: string) => {
-        console.warn('Use profileApi')
         return profileAPI.getProfile(userId)
         // return instance.get<void, AxiosResponse<UserProfileType>>(`profile/` + userId)
             }
