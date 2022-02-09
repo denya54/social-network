@@ -1,5 +1,5 @@
 import profileReducer, {
-    AddPostActionType, SetStatusReturnType,
+    AddPostActionType, DeletePostReturnType, SetStatusReturnType,
     SetUserProfileReturnType,
     UserProfileType
 } from "./profile-reducer";
@@ -18,7 +18,7 @@ type StoreType = {
 
 }
 export type ActionType = AddPostActionType |
-    SendMessageType | SetUserProfileReturnType | SetStatusReturnType
+    SendMessageType | SetUserProfileReturnType | SetStatusReturnType | DeletePostReturnType
 
 let store: StoreType = {
     _state: {

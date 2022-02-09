@@ -37,6 +37,7 @@ export type profileStatusType = {
 const ADD_POST = 'ADD-POST'
 const SET_USER_PROFILE = 'SET-USER-PROFILE'
 const SET_STATUS = 'SET-STATUS'
+const DELETE_POST = 'DELETE-POST'
 
 export type postType = {
     id?: number
@@ -83,6 +84,9 @@ const profileReducer = (state: profilePageType = initialState, action: ActionTyp
                 ...state, status: action.status
             }
         }
+        case DELETE_POST: {
+            return {...state, posts: state.posts.filter(p => p.id !== action.postID)}
+        }
         default:
             return state
     }
@@ -92,16 +96,19 @@ export type AddPostActionType = ReturnType<typeof addPostActionCreator>
 // export type UpdateNewPostTextType = ReturnType<typeof updateNewPostTextActionCreator>
 export type SetUserProfileReturnType = ReturnType<typeof setUserProfileAC>
 export type SetStatusReturnType = ReturnType<typeof setStatusActionCreator>
+export type DeletePostReturnType = ReturnType<typeof deletePostActionCreator>
 
 type ActionProfileType = AddPostActionType | SetUserProfileReturnType | SetStatusReturnType
 
 export const addPostActionCreator = (postText: string) => ({type: ADD_POST, postMessage: postText} as const)
-// export const updateNewPostTextActionCreator = (postText: string) => {
-//     return {type: UPDATE_NEW_POST_TEXT, NewText: postText} as const
-// }
+
 export const setUserProfileAC = (profile: UserProfileType) => ({type: SET_USER_PROFILE, profile} as const)
 
 export const setStatusActionCreator = (status: string) => ({type: SET_STATUS, status} as const)
+
+export const deletePostActionCreator = (postID: number) => ({type: DELETE_POST, postID} as const)
+
+
 
 
 export const getUserProfileThunk = (userId: string) => (dispatch: any) => {
