@@ -21,30 +21,18 @@ import {
 } from "../../redux/users-selector";
 
 
-
 class UsersContainer extends React.Component<UsersContainerPropsType> {
 
     componentDidMount() {
-        this.props.getUsersWithThunk(this.props.currentPage, this.props.pageSize)
-        // this.props.toggleIsFetching(true)
-        // userAPI.getUsers(this.props.currentPage, this.props.pageSize).then(data => {
-        //     this.props.toggleIsFetching(false)
-        //     this.props.setUsers(data.items)
-        //     this.props.setTotalUsersCount(data.totalCount)
-        // })
+        let {currentPage, pageSize} = this.props
+
+        this.props.getUsersWithThunk(currentPage, pageSize)
     }
 
     render() {
 
         let onPageChanged = (pageNumber: number) => {
             this.props.getUsersWithThunk(pageNumber, this.props.pageSize)
-
-            // this.props.setCurrentPage(pageNumber)
-            // this.props.toggleIsFetching(true)
-            // userAPI.getUsers(pageNumber, this.props.pageSize).then(data => {
-            //     this.props.toggleIsFetching(false)
-            //     this.props.setUsers(data.items)
-            // })
         }
 
         return <>
@@ -67,17 +55,6 @@ class UsersContainer extends React.Component<UsersContainerPropsType> {
         </>
     }
 }
-
-// let mapStateToProps = (state: StateType): MapStatePropsReturnType => {
-//     return {
-//         users: state.usersPage.users,
-//         pageSize: state.usersPage.pageSize,
-//         totalUsersCount: state.usersPage.totalUsersCount,
-//         currentPage: state.usersPage.currentPage,
-//         isFetching: state.usersPage.isFetching,
-//         followingInProgress: state.usersPage.followingInProgress
-//     }
-// }
 
 let mapStateToProps = (state: StateType): MapStatePropsReturnType => {
     return {
