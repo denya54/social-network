@@ -18,8 +18,8 @@ class App extends React.Component <AppPropsType>{
         this.props.initializeAppWithThunk()
     }
 
-    render() {
-        if(!this.props.initialized) {
+    render () {
+        if (!this.props.initialized) {
             return <Preloader/>
         }
         return (
@@ -53,12 +53,8 @@ export default connect(mapStateToProps, {
 })
 (App)
 
-type MapDispatchReturnType = {
-    initializeAppWithThunk: () => void
-}
+type MapDispatchReturnType = { initializeAppWithThunk: () => void }
 
-type MapStateReturnType = {
-    initialized: boolean
-}
+type MapStateReturnType = { initialized: boolean }
 
 type AppPropsType = MapDispatchReturnType & MapStateReturnType

@@ -10,7 +10,7 @@ export type AuthType = {
     // isFetching: boolean
 }
 
-const SET_USER_DATA = 'SET_USER_DATA'
+const SET_USER_DATA = 'auth/SET_USER_DATA'
 
 
 let initialState: AuthType = {
@@ -18,7 +18,6 @@ let initialState: AuthType = {
     email: null,
     login: null,
     isAuth: false
-    // isFetching: false
 }
 
 const authReducer = (state: AuthType = initialState, action: ActionAuthType): AuthType => {
@@ -34,25 +33,23 @@ const authReducer = (state: AuthType = initialState, action: ActionAuthType): Au
 }
 
 export const setAuthUserData = (userID: string | null, email: string | null, login: string | null, isAuth: boolean) =>
-    ({type: 'SET_USER_DATA', payload: {userID, email, login, isAuth}} as const)
+    ({type: SET_USER_DATA, payload: {userID, email, login, isAuth}} as const)
 
 
 export type setAuthUserDataACReturnType = ReturnType<typeof setAuthUserData>
 
-export const getAuthUserDataThunk = () => (dispatch: Dispatch) => {
-   return authAPI.me()
-        .then(response => {
+type ActionAuthType = setAuthUserDataACReturnType
+
+export const getAuthUserDataThunk = () => async (dispatch: Dispatch) => {
+   let response = await authAPI.me()
             if (response.data.resultCode === 0) {
                 // деструктуризация
                 let {id, email, login } = response.data.data
                 dispatch(setAuthUserData(id, email, login, true))
-            }
-        })
-}
+}}
 
-export const loginTC = (email: string, password: string, rememberMe: boolean) => (dispatch: any) => {
-    authAPI.login(email, password, rememberMe)
-        .then(response => {
+export const loginTC = (email: string, password: string, rememberMe: boolean) => async (dispatch: any) => {
+    let response = await authAPI.login(email, password, rememberMe)
             if (response.data.resultCode === 0) {
                 dispatch(getAuthUserDataThunk())
             } else {
@@ -60,17 +57,13 @@ export const loginTC = (email: string, password: string, rememberMe: boolean) =>
                 let action = stopSubmit('login', {_error: message})
                 dispatch(action)
             }
-        })
 }
 
-export const logoutTC = () => (dispatch: Dispatch) => {
-    authAPI.logout()
-        .then(response => {
+export const logoutTC = () => async (dispatch: Dispatch) => {
+   let response = await authAPI.logout()
             if (response.data.resultCode === 0) {
                 dispatch(setAuthUserData(null, null, null, false))
             }
-        })}
-
-type ActionAuthType = setAuthUserDataACReturnType
+        }
 
 export default authReducer;

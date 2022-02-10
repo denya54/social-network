@@ -1,4 +1,3 @@
-import {ActionType} from "./store";
 import {profileAPI, userAPI} from "../api/api";
 
 export type contactsType = {
@@ -34,10 +33,10 @@ export type profileStatusType = {
 }
 
 
-const ADD_POST = 'ADD-POST'
-const SET_USER_PROFILE = 'SET-USER-PROFILE'
-const SET_STATUS = 'SET-STATUS'
-const DELETE_POST = 'DELETE-POST'
+const ADD_POST = 'profile/ADD-POST'
+const SET_USER_PROFILE = 'profile/SET-USER-PROFILE'
+const SET_STATUS = 'profile/SET-STATUS'
+const DELETE_POST = 'profile/DELETE-POST'
 
 export type postType = {
     id?: number
@@ -47,14 +46,12 @@ export type postType = {
 
 export type profilePageType = {
     posts: Array<postType>
-    // newPostText: string
     profile: UserProfileType | null
     status: string
 }
 
 
 let initialState: profilePageType = {
-    // newPostText: "",
     posts: [
         {id: 1, message: "My first GAV", likesCount: 12},
         {id: 2, message: "Don`t like Myay", likesCount: 10},
@@ -64,7 +61,7 @@ let initialState: profilePageType = {
     status: ""
 };
 
-const profileReducer = (state: profilePageType = initialState, action: ActionType): profilePageType => {
+const profileReducer = (state: profilePageType = initialState, action: ActionProfileType): profilePageType => {
     switch (action.type) {
         case ADD_POST:
             return {
@@ -93,12 +90,11 @@ const profileReducer = (state: profilePageType = initialState, action: ActionTyp
 }
 
 export type AddPostActionType = ReturnType<typeof addPostActionCreator>
-// export type UpdateNewPostTextType = ReturnType<typeof updateNewPostTextActionCreator>
 export type SetUserProfileReturnType = ReturnType<typeof setUserProfileAC>
 export type SetStatusReturnType = ReturnType<typeof setStatusActionCreator>
 export type DeletePostReturnType = ReturnType<typeof deletePostActionCreator>
 
-type ActionProfileType = AddPostActionType | SetUserProfileReturnType | SetStatusReturnType
+type ActionProfileType = AddPostActionType | SetUserProfileReturnType | SetStatusReturnType | DeletePostReturnType
 
 export const addPostActionCreator = (postText: string) => ({type: ADD_POST, postMessage: postText} as const)
 
@@ -110,26 +106,20 @@ export const deletePostActionCreator = (postID: number) => ({type: DELETE_POST, 
 
 
 
-
-export const getUserProfileThunk = (userId: string) => (dispatch: any) => {
-    userAPI.getProfile(userId)
-        .then(response => {
+export const getUserProfileThunk = (userId: string) => async (dispatch: any) => {
+    let response = await userAPI.getProfile(userId)
             dispatch(setUserProfileAC(response.data))
-        })
-}
-export const getStatusThunk = (userId: string) => (dispatch: any) => {
-    profileAPI.getStatus(userId)
-        .then(response => {
-            dispatch(setStatusActionCreator(response.data))
-        })
 }
 
-export const updateStatusThunk = (status: string) => (dispatch: any) => {
-    profileAPI.updateStatus(status)
-        .then(response => {
+export const getStatusThunk = (userId: string) => async (dispatch: any) => {
+    let response = await profileAPI.getStatus(userId)
+            dispatch(setStatusActionCreator(response.data))
+}
+
+export const updateStatusThunk = (status: string) => async (dispatch: any) => {
+   let response = await profileAPI.updateStatus(status)
             if (response.data.resultCode === 0)
             dispatch(setStatusActionCreator(status))
-        })
 }
 
 export default profileReducer;
