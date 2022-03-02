@@ -10,7 +10,7 @@ import {Preloader} from "./components/common/Preloader/Preloader";
 
 const renderEntireTree = () => {
     ReactDOM.render(
-        <HashRouter basename={process.env.PUBLIC_URL}>
+        <HashRouter>
             <Provider store={store}>
                 <React.Suspense fallback={<Preloader/>}> <App/></React.Suspense>
             </Provider>
