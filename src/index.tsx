@@ -10,11 +10,11 @@ import {Preloader} from "./components/common/Preloader/Preloader";
 
 const renderEntireTree = () => {
     ReactDOM.render(
-        <BrowserRouter basename={process.env.PUBLIC_URL}>
+        <HashRouter basename={process.env.PUBLIC_URL}>
             <Provider store={store}>
                 <React.Suspense fallback={<Preloader/>}> <App/></React.Suspense>
             </Provider>
-        </BrowserRouter>,
+        </HashRouter>,
         document.getElementById('root')
     );
 }
