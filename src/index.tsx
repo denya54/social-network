@@ -5,16 +5,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import store from './redux/redux-store'
 import {Provider} from "react-redux";
-import {BrowserRouter} from "react-router-dom";
+import {BrowserRouter, HashRouter} from "react-router-dom";
 import {Preloader} from "./components/common/Preloader/Preloader";
 
 const renderEntireTree = () => {
     ReactDOM.render(
-        <BrowserRouter>
+        <HashRouter>
             <Provider store={store}>
                 <React.Suspense fallback={<Preloader/>}> <App/></React.Suspense>
             </Provider>
-        </BrowserRouter>,
+        </HashRouter>,
         document.getElementById('root')
     );
 }
