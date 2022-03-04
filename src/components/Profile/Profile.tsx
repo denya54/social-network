@@ -7,15 +7,20 @@ type ProfilePropsType = {
     profile: UserProfileType | null
     status: string
     updateStatus: (status: string) => void
+    isOwner: boolean
+    setPhoto: (photo: File) => void
 }
 
 const Profile = (props: ProfilePropsType) => {
+    // myID=20162
     return (
         <div>
             <ProfileInfo
                 profile={props.profile}
                 status={props.status}
                 updateStatus={props.updateStatus}
+                isOwner={props.isOwner}
+                savePhoto={props.setPhoto}
             />
             {/*<MyPost statePosts={props.stateProfile.posts}*/}
             {/*        dispatch={props.dispatch}*/}

@@ -5,7 +5,7 @@ import {StateType} from "../../redux/redux-store";
 import {
     getStatusThunk,
     getUserProfileThunk,
-    postType, updateStatusThunk,
+    postType, updatePhotoThunk, updateStatusThunk,
     UserProfileType
 } from "../../redux/profile-reducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
@@ -21,11 +21,9 @@ type PropsType = RouteComponentProps<PathParamsType> & ProfilePropsType
 
 class ProfileContainer extends React.Component <PropsType> {
 
-    componentDidMount() {
-
+    refreshProfile(){
         let userId = this.props.match.params.userId
         if (!userId) {
-           // '20162'
             userId =  this.props.authorisedUserID
             if (!userId) {
                 this.props.history.push('/login')
@@ -35,15 +33,27 @@ class ProfileContainer extends React.Component <PropsType> {
         this.props.getStatusWithThunk(userId)
     }
 
-    render() {
+    componentDidMount() {
+        this.refreshProfile()
+    }
 
+    componentDidUpdate(prevProps: Readonly<PropsType>, prevState: Readonly<{}>, snapshot?: any) {
+        if (this.props.match.params.userId !== prevProps.match.params.userId ) {
+            this.refreshProfile()
+        }
+    }
+
+
+    render() {
         // if (!this.props.isAuth) return <Redirect to={'/login'}/>
         return (
             <Profile
                 {...this.props}
+                isOwner={!this.props.match.params.userId}
                 profile={this.props.profile}
                 status={this.props.status}
                 updateStatus={this.props.updateStatusWithThunk}
+                setPhoto={this.props.updatePhotoWithThunk}
             />
         )
     }
@@ -73,6 +83,7 @@ type MapDispatchPropsReturnType = {
     getUserProfileWithThunk: (userId: string ) => void
     getStatusWithThunk: (userId: string)  => void
     updateStatusWithThunk: (status: string) => void
+    updatePhotoWithThunk: (photo: File) => void
 }
 
 
@@ -82,7 +93,8 @@ export default compose<React.ComponentType>(
     connect(mapStateToProps, {
         getUserProfileWithThunk: getUserProfileThunk,
         getStatusWithThunk: getStatusThunk,
-        updateStatusWithThunk: updateStatusThunk
+        updateStatusWithThunk: updateStatusThunk,
+        updatePhotoWithThunk: updatePhotoThunk
     }),
     withRouter,
     withAuthRedirect
