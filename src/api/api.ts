@@ -45,13 +45,11 @@ export const profileAPI = {
         return instance.put<void, AxiosResponse<profilePhotoType>>(`profile/photo`, formData, {headers: {
             'Content-Type': 'multipart/form-data'
         }})
+    },
+    updateMyProfile: (profileData: any) => {
+      return instance.put<void, AxiosResponse<profileStatusType>>(`profile/`, profileData)
     }
 }
-
-// type updatePhotoResponseType = {
-//     small: string
-//     large: string
-// }
 
 export const authAPI = {
    me() {

@@ -1,10 +1,11 @@
-import React, {ChangeEvent} from 'react';
+import React, {ChangeEvent, useState} from 'react';
 import classes from './ProfileInfo.module.css';
-import {UserProfileType} from "../../../redux/profile-reducer";
+import {ProfileDataType, UserProfileType} from "../../../redux/profile-reducer";
 import {Preloader} from "../../common/Preloader/Preloader";
 import ProfileStatus from "./ProfileStatus";
 import mainPhoto from "../../../assets/images/nophotoava.png";
 import {Contacts} from "./Contacts";
+import {ProfileDescriptionEditForm} from "./ProfileDescriptionEditForm";
 
 type ProfileInfoPropsType = {
     profile: UserProfileType | null
@@ -12,9 +13,12 @@ type ProfileInfoPropsType = {
     updateStatus: (status: string) => void
     isOwner: boolean
     savePhoto: (photo: File) => void
+    setProfileData: (profileData: ProfileDataType) => void
 }
 
 const ProfileInfo = (props: ProfileInfoPropsType) => {
+
+    const [editMode, setEditMode] = useState(false)
 
     if (!props.profile) {
         return <Preloader/>
@@ -39,15 +43,20 @@ const ProfileInfo = (props: ProfileInfoPropsType) => {
                 {props.isOwner &&
                 <div>Для загрузки нового аватара <input type={'file'} onChange={onMainPhotoSelected}/></div>}
             </div>
-            <ProfileDescription profile={props.profile}/>
-
+            {editMode
+                ? <ProfileDescriptionEditForm profile={props.profile}
+                                                    changeEditMode={() => setEditMode(false)}
+                                                    setProfileData={props.setProfileData}/>
+                : <ProfileDescription profile={props.profile}
+                                      isOwner={props.isOwner}
+                                      changeEditMode={() => setEditMode(true)}/>}
         </div>
     )
 }
 export default ProfileInfo;
 
 
-export const ProfileDescription = (props: {profile: UserProfileType}) => {
+export const ProfileDescription = (props: { profile: UserProfileType, isOwner: boolean, changeEditMode: () => void }) => {
     return (
         <div>
             <div>
@@ -57,8 +66,7 @@ export const ProfileDescription = (props: {profile: UserProfileType}) => {
 
             <div>
                 <p>Looking for a job: {props.profile.lookingForAJob ? 'yes' : 'no'}</p>
-                {props.profile.lookingForAJob &&
-                <p>My professional skills: {props.profile.lookingForAJobDescription}</p>}
+                <p>My professional skills: {props.profile.lookingForAJobDescription}</p>
             </div>
             <div>
                 {props.profile.contacts && <p>Contacts: {Object.keys(props.profile.contacts).map((key) => {
@@ -66,6 +74,8 @@ export const ProfileDescription = (props: {profile: UserProfileType}) => {
                     return <Contacts key={key} contactTitle={key} contactValue={props.profile?.contacts[key]}/>
                 })}</p>}
             </div>
+            {props.isOwner && <button onClick={props.changeEditMode}>Change Profile Info</button>}
         </div>
     )
 }
+

@@ -5,7 +5,7 @@ import {StateType} from "../../redux/redux-store";
 import {
     getStatusThunk,
     getUserProfileThunk,
-    postType, updatePhotoThunk, updateStatusThunk,
+    postType, ProfileDataType, updatePhotoThunk, updateProfileThunk, updateStatusThunk,
     UserProfileType
 } from "../../redux/profile-reducer";
 import {RouteComponentProps, withRouter} from "react-router-dom";
@@ -54,6 +54,7 @@ class ProfileContainer extends React.Component <PropsType> {
                 status={this.props.status}
                 updateStatus={this.props.updateStatusWithThunk}
                 setPhoto={this.props.updatePhotoWithThunk}
+                setProfileData={this.props.updateProfileWithThunk}
             />
         )
     }
@@ -84,6 +85,7 @@ type MapDispatchPropsReturnType = {
     getStatusWithThunk: (userId: string)  => void
     updateStatusWithThunk: (status: string) => void
     updatePhotoWithThunk: (photo: File) => void
+    updateProfileWithThunk: (profileData: ProfileDataType) => void
 }
 
 
@@ -94,7 +96,8 @@ export default compose<React.ComponentType>(
         getUserProfileWithThunk: getUserProfileThunk,
         getStatusWithThunk: getStatusThunk,
         updateStatusWithThunk: updateStatusThunk,
-        updatePhotoWithThunk: updatePhotoThunk
+        updatePhotoWithThunk: updatePhotoThunk,
+        updateProfileWithThunk: updateProfileThunk
     }),
     withRouter,
     withAuthRedirect

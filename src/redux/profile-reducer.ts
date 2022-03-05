@@ -1,4 +1,5 @@
 import {profileAPI, userAPI} from "../api/api";
+import {StateType} from "./redux-store";
 
 export type contactsType = {
     facebook: string | null
@@ -120,6 +121,7 @@ export const setUserProfileAC = (profile: UserProfileType) => ({type: SET_USER_P
 export const setStatusActionCreator = (status: string) => ({type: SET_STATUS, status} as const)
 export const deletePostActionCreator = (postID: number) => ({type: DELETE_POST, postID} as const)
 export const setPhotoActionCreator = (photos: photosType) => ({type: SET_PHOTO, photos} as const)
+export const setMyProfileActionCreator = (photos: photosType) => ({type: SET_PHOTO, photos} as const)
 
 
 export const getUserProfileThunk = (userId: string) => async (dispatch: any) => {
@@ -143,6 +145,34 @@ export const updatePhotoThunk = (photo: File) => async (dispatch: any) => {
     debugger
     if (response.data.resultCode === 0)
         dispatch(setPhotoActionCreator(response.data.data.photos))
+}
+
+export type ProfileDataType = {
+    fullName?: string
+    aboutMe?: string
+    lookingForAJob?: boolean
+    lookingForAJobDescription?: string
+    contacts?: {
+        github: string
+        vk: string
+        facebook: string
+        instagram: string
+        twitter: string
+        website: string
+        youtube: string
+        mainLink: string
+    }
+
+}
+
+export const updateProfileThunk = (profileData: ProfileDataType) => async (dispatch: any, getState: () => StateType) => {
+    const myID = getState().auth.id
+    let response = await profileAPI.updateMyProfile(profileData)
+    debugger
+    if (response.data.resultCode === 0) {
+
+        dispatch(getUserProfileThunk(myID))
+    }
 }
 
 export default profileReducer;
