@@ -32,7 +32,7 @@ const ProfileStatus = (props: ProfileStatusPropsType) => {
                               onBlur={deActivateEditMode}
                               autoFocus/>
                 </div>
-                : <div><span onDoubleClick={activateEditMode}>{status || 'No status'}</span></div>
+                : <div>status: <span onDoubleClick={activateEditMode}>{status || 'No status'}</span></div>
             }
         </div>)
 }

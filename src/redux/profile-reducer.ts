@@ -43,14 +43,11 @@ export type profilePhotoType = {
     }
 }
 
-
 const ADD_POST = 'profile/ADD-POST'
 const SET_USER_PROFILE = 'profile/SET-USER-PROFILE'
 const SET_STATUS = 'profile/SET-STATUS'
 const DELETE_POST = 'profile/DELETE-POST'
 const SET_PHOTO = 'profile/SET-PHOTO'
-const SET_PHOTO_SMALL = 'profile/SET-PHOTO-SMALL'
-const SET_PHOTO_LARGE = 'profile/SET-PHOTO-LARGE'
 
 export type postType = {
     id?: number
@@ -101,11 +98,6 @@ const profileReducer = (state: profilePageType = initialState, action: ActionPro
         case SET_PHOTO: {
             return {...state, profile: {...state.profile, photos: action.photos}}
         }
-        // case SET_PHOTO_SMALL: {
-        //     return {
-        //         ...state, profile: {...state.profile, photos: {...state.profile?.photos, small: action.photo}}
-        //     }
-        // }
         default:
             return state
     }
@@ -116,24 +108,18 @@ export type SetUserProfileReturnType = ReturnType<typeof setUserProfileAC>
 export type SetStatusReturnType = ReturnType<typeof setStatusActionCreator>
 export type DeletePostReturnType = ReturnType<typeof deletePostActionCreator>
 export type SetPhotoReturnType = ReturnType<typeof setPhotoActionCreator>
-export type SetPhotoLargeReturnType = ReturnType<typeof setLargePhotoActionCreator>
-export type SetPhotoSmallReturnType = ReturnType<typeof setSmallPhotoActionCreator>
 
 type ActionProfileType = AddPostActionType
     | SetUserProfileReturnType
     | SetStatusReturnType
     | DeletePostReturnType
     | SetPhotoReturnType
-    | SetPhotoLargeReturnType
-    | SetPhotoSmallReturnType
 
 export const addPostActionCreator = (postText: string) => ({type: ADD_POST, postMessage: postText} as const)
 export const setUserProfileAC = (profile: UserProfileType) => ({type: SET_USER_PROFILE, profile} as const)
 export const setStatusActionCreator = (status: string) => ({type: SET_STATUS, status} as const)
 export const deletePostActionCreator = (postID: number) => ({type: DELETE_POST, postID} as const)
 export const setPhotoActionCreator = (photos: photosType) => ({type: SET_PHOTO, photos} as const)
-export const setSmallPhotoActionCreator = (photo: string) => ({type: SET_PHOTO_SMALL, photo} as const)
-export const setLargePhotoActionCreator = (photo: string) => ({type: SET_PHOTO_LARGE, photo} as const)
 
 
 export const getUserProfileThunk = (userId: string) => async (dispatch: any) => {
@@ -157,8 +143,6 @@ export const updatePhotoThunk = (photo: File) => async (dispatch: any) => {
     debugger
     if (response.data.resultCode === 0)
         dispatch(setPhotoActionCreator(response.data.data.photos))
-    //     dispatch(setLargePhotoActionCreator(response.data.data.photos.large))
-    // dispatch(setSmallPhotoActionCreator(response.data.data.photos.small))
 }
 
 export default profileReducer;
