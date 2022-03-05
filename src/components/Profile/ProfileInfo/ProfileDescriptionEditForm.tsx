@@ -14,13 +14,13 @@ export const ProfileDescriptionEditForm = (props: ProfileEditPropsType) => {
     let changeName = (e: ChangeEvent<HTMLInputElement>) => setNameField(e.currentTarget.value)
 
     let [aboutMeField, setAboutMeField] = useState(props.profile.aboutMe)
-    let changeAboutMe = (e: ChangeEvent<HTMLInputElement>) => setAboutMeField(e.currentTarget.value)
+    let changeAboutMe = (e: ChangeEvent<HTMLTextAreaElement>) => setAboutMeField(e.currentTarget.value)
 
     let [lookingForAJobField, setLookingForAJobField] = useState(props.profile.lookingForAJob)
     let changeLookingForAJob = (e: ChangeEvent<HTMLInputElement>) => setLookingForAJobField(e.currentTarget.checked)
 
     let [mySkillsField, setMySkillsField] = useState(props.profile.lookingForAJobDescription)
-    let changeMySkills = (e: ChangeEvent<HTMLInputElement>) => setMySkillsField(e.currentTarget.value)
+    let changeMySkills = (e: ChangeEvent<HTMLTextAreaElement>) => setMySkillsField(e.currentTarget.value)
 
 
     let onSubmit = () => {
@@ -41,7 +41,7 @@ export const ProfileDescriptionEditForm = (props: ProfileEditPropsType) => {
                                   onChange={changeName}
                 />
                 </p>
-                <p>About me: <input value={aboutMeField}
+                <p>About me: <textarea value={aboutMeField}
                                     onChange={changeAboutMe}/></p>
             </div>
 
@@ -49,7 +49,7 @@ export const ProfileDescriptionEditForm = (props: ProfileEditPropsType) => {
                 <p>Looking for a job: <input type={'checkbox'}
                                              checked={lookingForAJobField}
                                              onChange={changeLookingForAJob}/></p>
-                <p>My professional skills: <input value={mySkillsField}
+                <p>My professional skills: <textarea value={mySkillsField}
                                                   onChange={changeMySkills}/></p>
             </div>
             <div>
