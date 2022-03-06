@@ -142,7 +142,6 @@ export const updateStatusThunk = (status: string) => async (dispatch: any) => {
 
 export const updatePhotoThunk = (photo: File) => async (dispatch: any) => {
     let response = await profileAPI.updatePhoto(photo)
-    debugger
     if (response.data.resultCode === 0)
         dispatch(setPhotoActionCreator(response.data.data.photos))
 }
@@ -153,14 +152,14 @@ export type ProfileDataType = {
     lookingForAJob?: boolean
     lookingForAJobDescription?: string
     contacts?: {
-        github: string
-        vk: string
-        facebook: string
-        instagram: string
-        twitter: string
-        website: string
-        youtube: string
-        mainLink: string
+        github?: string
+        vk?: string
+        facebook?: string
+        instagram?: string
+        twitter?: string
+        website?: string
+        youtube?: string
+        mainLink?: string
     }
 
 }

@@ -1,5 +1,5 @@
 import {ProfileDataType, UserProfileType} from "../../../redux/profile-reducer";
-import {Contacts} from "./Contacts";
+import {Contacts, ContactsEditForm} from "./Contacts";
 import React, {ChangeEvent, useState} from "react";
 
 type ProfileEditPropsType = {
@@ -28,7 +28,12 @@ export const ProfileDescriptionEditForm = (props: ProfileEditPropsType) => {
             fullName: nameField,
             aboutMe: aboutMeField,
             lookingForAJob: lookingForAJobField,
-            lookingForAJobDescription: mySkillsField
+            lookingForAJobDescription: mySkillsField,
+          //  contacts: {
+          //      github: 'https://github.com/denya54',
+           //     vk: 'https://vk.com/nice_dgl',
+         //       instagram: 'https://www.instagram.com/khvesenya.denis/'
+          //  }
         }
         props.setProfileData(profileData)
         props.changeEditMode()
@@ -55,7 +60,7 @@ export const ProfileDescriptionEditForm = (props: ProfileEditPropsType) => {
             <div>
                 {props.profile.contacts && <p>Contacts: {Object.keys(props.profile.contacts).map((key) => {
                     // @ts-ignore
-                    return <Contacts key={key} contactTitle={key} contactValue={props.profile?.contacts[key]}/>
+                    return <ContactsEditForm key={key} contactTitle={key} contactValue={props.profile?.contacts[key]}/>
                 })}</p>}
             </div>
             <button onClick={onSubmit}>Save</button>

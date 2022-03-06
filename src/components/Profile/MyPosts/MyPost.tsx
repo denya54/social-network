@@ -8,7 +8,8 @@ import {Textarea} from "../../common/FormsControls/FormsConrols";
 
 const MyPost = React.memo((props: MyPostPropsType) => {
 
-    let postsElement = props.statePosts.map(post => <Post message={post.message}
+    let postsElement = props.statePosts.map(post => <Post key={post.id}
+                                                          message={post.message}
                                                           likesCount={post.likesCount}/>)
 
     let onAddPost = (values: any) => {
@@ -37,7 +38,8 @@ export const AddNewPostForm: React.FC<InjectedFormProps<MyPostFormDataType>> = (
     return (
         <form onSubmit={props.handleSubmit}>
             <div>
-                <Field name={'newPostText'} component={Textarea} placeholder={'Post me'} validate={[required, maxLength10]}/>
+                <Field name={'newPostText'} component={Textarea} placeholder={'Post me'}
+                       validate={[required, maxLength10]}/>
             </div>
             <div>
                 <button>Add new post</button>
