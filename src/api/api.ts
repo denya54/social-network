@@ -64,5 +64,15 @@ export const authAPI = {
     }
 }
 
+type CaptchaResponse = {
+    url: string
+}
+
+export const securityAPI = {
+    getCaptchaUrl () {
+        return instance.get<void, AxiosResponse<CaptchaResponse>>(`security/get-captcha-url`)
+    }
+}
+
 
 

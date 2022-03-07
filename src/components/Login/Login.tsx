@@ -12,9 +12,12 @@ type FormDataType = {
     email: string
     password: string
     rememberMe: boolean
+    //captcha: string
 }
 
-export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, error}) => {
+export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubmit, error,
+                                                                         //captchaURL
+} ) => {
     return (
         <form onSubmit={handleSubmit}>
             <div>
@@ -26,6 +29,9 @@ export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubm
             </div>
             <div><Field type={'checkbox'} component={Input} name={'remember me'}/>remember me</div>
 
+            {/*{captchaURL && <img src={captchaURL}/>}*/}
+            {/*{captchaURL &&  <Field placeholder={'Symbols from Image'} component={Input} name={'captcha'} validate={[required]}/>}*/}
+
             {error && <div className={styles.formSummaryError}>{error}</div>}
             <div>
                 <button>Login</button>
@@ -36,13 +42,13 @@ export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = ({handleSubm
 type PropsType = {
     isAuth: boolean
     loginTC: (email: string, password: string, rememberMe: boolean) => void
+    captchaURL: string | null
 }
 
 export const Login = (props: PropsType) => {
 
     const onSubmit = (formData: FormDataType) => {
         props.loginTC(formData.email, formData.password, formData.rememberMe)
-        console.log(formData)
     }
     if (props.isAuth) {
         return <Redirect to={'/profile'}/>
@@ -50,7 +56,9 @@ export const Login = (props: PropsType) => {
     return (
         <div>
             <h1>Login</h1>
-            <LoginReduxForm onSubmit={onSubmit}/>
+            <LoginReduxForm onSubmit={onSubmit}
+                            //captchaURL={props.captchaURL}
+            />
         </div>)
 }
 
@@ -59,10 +67,12 @@ const LoginReduxForm = reduxForm<FormDataType>({form: 'login'})(LoginForm)
 
 type MapStatePropsReturnType = {
     isAuth: boolean
+    captchaURL: string | null
 }
 
 const mapStateToProps = (state: StateType): MapStatePropsReturnType => ({
-    isAuth: state.auth.isAuth
+    isAuth: state.auth.isAuth,
+    captchaURL: state.auth.captcha
 })
 
 type MapDispatchPropsReturnType = {
@@ -72,10 +82,11 @@ type MapDispatchPropsReturnType = {
 type LoginPropsType = MapDispatchPropsReturnType & MapStatePropsReturnType
 
 // функциональная
-const LoginContainer: React.FC<LoginPropsType> = ({isAuth, loginTC}) => {
+const LoginContainer: React.FC<LoginPropsType> = ({isAuth, loginTC, captchaURL}) => {
     return (
         <Login isAuth={isAuth}
                loginTC={loginTC}
+               captchaURL={captchaURL}
         />
     )
 }
