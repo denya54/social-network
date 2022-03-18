@@ -1,6 +1,5 @@
 import {authAPI, securityAPI} from "../api/api";
 import {Dispatch} from "redux";
-import {stopSubmit} from "redux-form";
 
 export type AuthType = {
     id: string,
@@ -8,11 +7,13 @@ export type AuthType = {
     login: string | null,
     isAuth: boolean,
     captcha: string | null
+    error: string | null
     // isFetching: boolean
 }
 
 const SET_USER_DATA = 'auth/SET_USER_DATA'
 const GET_CAPTCHA_URL = 'auth/GET_CAPTCHA_URL'
+const GET_AUTH_ERROR= 'auth/GET_AUTH_ERROR'
 
 
 let initialState: AuthType = {
@@ -20,7 +21,8 @@ let initialState: AuthType = {
     email: null,
     login: null,
     isAuth: false,
-    captcha: null
+    captcha: null,
+    error: null
 }
 
 const authReducer = (state: AuthType = initialState, action: ActionAuthType): AuthType => {
@@ -32,6 +34,8 @@ const authReducer = (state: AuthType = initialState, action: ActionAuthType): Au
             }
         case GET_CAPTCHA_URL:
             return {...state, captcha: action.payload.captchaURL}
+        case GET_AUTH_ERROR:
+            return {...state, error: action.payload.error}
         default:
             return state
     }
@@ -44,11 +48,16 @@ export const getCaptchaUrlAC = (captchaURL: string) => {
     return ({type: GET_CAPTCHA_URL, payload: {captchaURL}} as const)
 }
 
+export const getAuthErrorAC = (error: string | null) => {
+    return ({type: GET_AUTH_ERROR, payload: {error}} as const)
+}
+
 
 export type setAuthUserDataACReturnType = ReturnType<typeof setAuthUserData>
 export type getCaptchaUrlACReturnType = ReturnType<typeof getCaptchaUrlAC>
+export type getAuthErrorACReturnType = ReturnType<typeof getAuthErrorAC>
 
-type ActionAuthType = setAuthUserDataACReturnType | getCaptchaUrlACReturnType
+type ActionAuthType = setAuthUserDataACReturnType | getCaptchaUrlACReturnType | getAuthErrorACReturnType
 
 export const getAuthUserDataThunk = () => async (dispatch: Dispatch) => {
     let response = await authAPI.me()
@@ -59,8 +68,8 @@ export const getAuthUserDataThunk = () => async (dispatch: Dispatch) => {
     }
 }
 
-export const loginTC = (email: string, password: string, rememberMe: boolean) => async (dispatch: any) => {
-    let response = await authAPI.login(email, password, rememberMe)
+export const loginTC = (email: string, password: string, rememberMe: boolean, captcha: string) => async (dispatch: any) => {
+    let response = await authAPI.login(email, password, rememberMe, captcha)
     if (response.data.resultCode === 0) {
         dispatch(getAuthUserDataThunk())
     }  else {
@@ -68,8 +77,7 @@ export const loginTC = (email: string, password: string, rememberMe: boolean) =>
             dispatch(getCaptchaURLTC())
         }
         let message = response.data.messages.length > 0 ? response.data.messages[0] : 'Some error'
-        let action = stopSubmit('login', {_error: message})
-        dispatch(action)
+        dispatch(getAuthErrorAC(message))
     }
 }
 

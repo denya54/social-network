@@ -55,9 +55,9 @@ export const authAPI = {
    me() {
        return instance.get<void, AxiosResponse<{ data: AuthType, resultCode: number }>>(`auth/me`)
    },
-    login(email: string, password: string, rememberMe: boolean = false) {
+    login(email: string, password: string, rememberMe: boolean = false, captcha: string) {
        return instance.post<void, AxiosResponse<{resultCode: number, messages: Array<string>, data: {userID: number}}>>(`auth/login`,
-           {email, password, rememberMe})
+           {email, password, rememberMe, captcha})
     },
     logout() {
        return instance.delete<void, AxiosResponse<{resultCode: number, messages: Array<string>, data: object}>>(`auth/login`)

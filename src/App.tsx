@@ -6,7 +6,6 @@ import {BrowserRouter, HashRouter, Route} from 'react-router-dom';
 // import UsersContainer from "./components/Users/UsersContainer";
 // import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
-import LoginContainer from "./components/Login/Login";
 import {connect} from "react-redux";
 import {initializeAppTC} from "./redux/app-reducer";
 import {StateType} from "./redux/redux-store";
@@ -37,7 +36,6 @@ class App extends React.Component <AppPropsType>{
                         />}/>
                         <Route path='/users' render={() => <UsersContainer/>}/>
                         <Route path='/login' render={() => <LoginFormik/>}/>
-                        {/*<Route path='/login' render={() => <LoginContainer/>}/>*/}
 
                         {/*<Route path='/news' component={News}/>*/}
                         {/*<Route path='/music' component={Music}/>*/}
