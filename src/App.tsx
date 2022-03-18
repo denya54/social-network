@@ -11,6 +11,7 @@ import {connect} from "react-redux";
 import {initializeAppTC} from "./redux/app-reducer";
 import {StateType} from "./redux/redux-store";
 import {Preloader} from "./components/common/Preloader/Preloader";
+import {LoginFormik} from "./components/Login/LoginFormik";
 
 const DialogsContainer = React.lazy(()=> import("./components/Dialogs/DialogsContainer"))
 const ProfileContainer = React.lazy(()=> import("./components/Profile/ProfileContainer"))
@@ -35,7 +36,9 @@ class App extends React.Component <AppPropsType>{
                         <Route path='/dialogs' render={() => <DialogsContainer
                         />}/>
                         <Route path='/users' render={() => <UsersContainer/>}/>
-                        <Route path='/login' render={() => <LoginContainer/>}/>
+                        <Route path='/login' render={() => <LoginFormik/>}/>
+                        {/*<Route path='/login' render={() => <LoginContainer/>}/>*/}
+
                         {/*<Route path='/news' component={News}/>*/}
                         {/*<Route path='/music' component={Music}/>*/}
                         {/*<Route path='/settings' component={Settings}/>*/}
