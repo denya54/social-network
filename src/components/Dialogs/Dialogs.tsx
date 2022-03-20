@@ -37,6 +37,7 @@ const Dialogs = (props: DialPropsType) => {
                 <AddMessageFormik/>
 
             </div>
+            this page must be do
         </div>
     )
 }
