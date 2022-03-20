@@ -3,17 +3,15 @@ import classes from './Dialogs.module.css'
 import DialogItem from "./DialogItem/DialogItem";
 import Message from "./Message/Message";
 import {DialPropsType} from "./DialogsContainer";
-import {dialogsPageType} from "../../redux/dialog-reducer";
-import {Field, InjectedFormProps, reduxForm} from "redux-form";
+import {dialogsPageType, sendMessageCreator} from "../../redux/dialog-reducer";
 import {Textarea} from "../common/FormsControls/FormsConrols";
 import {maxLengthCreator, required} from "../../utils/validators";
+import {useFormik} from 'formik';
+import { useDispatch } from 'react-redux';
 
 type dialogsProps = {
-    // updateNewMessageBody: (body: string) => void
     sendMessage: (body: string) => void
     dialogsPage: dialogsPageType
-    // dispatch: (action: ActionType) => void
-    // store: StoreType
 }
 
 const Dialogs = (props: DialPropsType) => {
@@ -36,8 +34,8 @@ const Dialogs = (props: DialPropsType) => {
             </div>
             <div className={classes.dialogsMessages}>
                 <div>{messagesElements}</div>
+                <AddMessageFormik/>
 
-                <AddMessageReduxForm onSubmit={addNewMessage}/>
             </div>
         </div>
     )
@@ -49,27 +47,29 @@ type MyMessageFormDataType = {
 
 let maxLength50 = maxLengthCreator(50)
 
-export const AddMessageForm: React.FC<InjectedFormProps<MyMessageFormDataType>> = (props) => {
+export const AddMessageFormik = () => {
+    const dispatch = useDispatch()
+
+    const formik = useFormik({
+        initialValues: {
+            newMessageBody: ''
+        },
+        onSubmit: values => {
+            dispatch(sendMessageCreator(values.newMessageBody))
+            formik.resetForm()
+        }
+    })
+
     return (
-        <form onSubmit={props.handleSubmit}>
-            <div>
-                <Field component={Textarea}
-                       name={'newMessageBody'}
-                       placeholder={'enter your message'}
-                       validate={[required, maxLength50]}/>
-                {/*<textarea value={newMessageBody} onChange={onNewMessageChange}*/}
-                {/*          placeholder={'Write your message'}></textarea>*/}
-            </div>
-            <div>
-                <button
-                    // onClick={onSendMessageClick}
-                >SEND
-                </button>
-            </div>
+        <form onSubmit={formik.handleSubmit}>
+            <textarea
+                name={'newMessageBody'}
+                onChange={formik.handleChange}
+                value={formik.values.newMessageBody}
+            />
+            <button>Send Message</button>
         </form>
     )
 }
-
-const AddMessageReduxForm = reduxForm<MyMessageFormDataType>({form: 'dialogAddMessageForm'})(AddMessageForm)
 
 export default Dialogs;
