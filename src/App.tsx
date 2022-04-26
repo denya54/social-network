@@ -14,6 +14,7 @@ const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileCo
 const UsersContainer = React.lazy(() => import("./components/Users/UsersContainer"))
 
 class App extends React.Component <AppPropsType> {
+
     componentDidMount() {
         this.props.initializeAppWithThunk()
     }

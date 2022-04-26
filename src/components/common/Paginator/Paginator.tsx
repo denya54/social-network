@@ -43,3 +43,7 @@ return (
     </div>
 )
 }
+
+function cn(paginator: string, selectPage: string): string | undefined {
+    throw new Error('Function not implemented.');
+}

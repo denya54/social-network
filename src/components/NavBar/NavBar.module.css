@@ -1,12 +1,13 @@
 .nav {
     grid-area: n;
-    background-color: chocolate;
+    background-color: darkblue;
     padding: 20px;
+    font-family: 'Poppins', sans-serif;
 }
 .item a{
-    color: silver;
+    color: cornsilk;
     text-decoration: none;
 }
 .item a.activeLink {
-    color: black;
+    color: greenyellow;
 }

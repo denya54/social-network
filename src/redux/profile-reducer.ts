@@ -135,9 +135,14 @@ export const getStatusThunk = (userId: string) => async (dispatch: any) => {
 }
 
 export const updateStatusThunk = (status: string) => async (dispatch: any) => {
-    let response = await profileAPI.updateStatus(status)
-    if (response.data.resultCode === 0)
-        dispatch(setStatusActionCreator(status))
+    try {
+        let response = await profileAPI.updateStatus(status)
+        if (response.data.resultCode === 0)
+            dispatch(setStatusActionCreator(status))
+    } catch (error) {
+        alert(error.message)
+    }
+
 }
 
 export const updatePhotoThunk = (photo: File) => async (dispatch: any) => {
