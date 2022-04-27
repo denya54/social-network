@@ -11,7 +11,7 @@ const Post = (props: postType) => {
                 src={'https://i.pinimg.com/236x/ad/f8/46/adf8468dafd48dc33091e0790d000c0e--dog-breath-high-five.jpg?nii=t'}/>
             {props.message}
             <div>
-                <span>like </span>{props.likesCount}
+                <span>♡ </span>{props.likesCount}
             </div>
         </div>
     )

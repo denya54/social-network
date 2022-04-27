@@ -27,12 +27,12 @@ export const User = (props: propsUserType) => {
                         <div>
                             {props.user.followed
                                 ?
-                                <button disabled={props.followingInProgress.some(id => id === user.id)} onClick={() => {
+                                <button className={styles.butt} disabled={props.followingInProgress.some(id => id === user.id)} onClick={() => {
                                     props.unfollowWithThunk(user.id)
                                 }}>UnFollow</button>
 
                                 :
-                                <button disabled={props.followingInProgress.some(id => id === user.id)} onClick={() => {
+                                <button className={styles.butt} disabled={props.followingInProgress.some(id => id === user.id)} onClick={() => {
                                     props.followWithThunk(user.id)
                                 }}>Follow</button>}
                         </div>

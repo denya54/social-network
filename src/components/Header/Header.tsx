@@ -1,5 +1,6 @@
 import React from 'react';
 import {NavLink} from 'react-router-dom';
+import { ButtonApp } from '../ButtonApp';
 import classes from './Header.module.css';
 import {HeaderPropsType} from "./HeaderContainer";
 
@@ -12,7 +13,7 @@ const Header = (props: HeaderPropsType) => {
             <div className={classes.loginBlock}>
                 {
                     props.isAuth
-                        ? <div>Your NickName: {props.login} <p><button className={classes.butt} onClick={props.logoutTC}>LogOut</button></p> </div>
+                        ? <div>Your NickName: {props.login} <p><ButtonApp nameButton={'LogOut'} functionForClick={props.logoutTC}/></p> </div>
                         : <NavLink to={'/login'}>LogIN</NavLink>
                 }
             </div>

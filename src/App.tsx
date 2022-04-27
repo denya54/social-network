@@ -8,6 +8,7 @@ import {initializeAppTC} from "./redux/app-reducer";
 import {StateType} from "./redux/redux-store";
 import {Preloader} from "./components/common/Preloader/Preloader";
 import {LoginFormik} from "./components/Login/LoginFormik";
+import { InProgress } from './components/InProgress/InProgress';
 
 const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"))
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"))
@@ -36,11 +37,12 @@ class App extends React.Component <AppPropsType> {
                             />}/>
                             <Route path='/users' render={() => <UsersContainer/>}/>
                             <Route path='/login' render={() => <LoginFormik/>}/>
+                            <Route path='/news' render={() => <InProgress/>}/>
+                            <Route path='/music' render={() => <InProgress/>}/>
+                            <Route path='/settings' render={() => <InProgress/>}/>
                             <Route path='*' render={() => <div>404 - Page not found</div>}/>
 
-                            {/*<Route path='/news' component={News}/>*/}
-                            {/*<Route path='/music' component={Music}/>*/}
-                            {/*<Route path='/settings' component={Settings}/>*/}
+
                         </Switch>
                     </div>
                 </div>

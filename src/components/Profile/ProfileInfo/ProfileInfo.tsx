@@ -6,6 +6,7 @@ import ProfileStatus from "./ProfileStatus";
 import mainPhoto from "../../../assets/images/nophotoava.png";
 import {Contacts} from "./Contacts";
 import {ProfileDescriptionEditForm} from "./ProfileDescriptionEditForm";
+import { ButtonApp } from '../../ButtonApp';
 
 type ProfileInfoPropsType = {
     profile: UserProfileType | null
@@ -57,6 +58,7 @@ export default ProfileInfo;
 
 
 export const ProfileDescription = (props: { profile: UserProfileType, isOwner: boolean, changeEditMode: () => void }) => {
+    // @ts-ignore
     return (
         <div>
             <div>
@@ -74,7 +76,9 @@ export const ProfileDescription = (props: { profile: UserProfileType, isOwner: b
                     return <Contacts key={key} contactTitle={key} contactValue={props.profile?.contacts[key]}/>
                 })}</p>}
             </div>
-            {props.isOwner && <button onClick={props.changeEditMode}>Change Profile Info</button>}
+            {props.isOwner && <ButtonApp nameButton={'Change Profile Info'} functionForClick={props.changeEditMode}/>
+            // <button onClick={props.changeEditMode}>Change Profile Info</button>
+            }
         </div>
     )
 }

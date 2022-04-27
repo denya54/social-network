@@ -27,7 +27,7 @@ export const Paginator = (props: propsPaginatorType) => {
 return (
     <div className={styles.paginator}>
         {portionNumber > 1 &&
-        <button onClick={() => {setPortionNumber((portionNumber - 1))}}>PREV</button>}
+        <button className={styles.butt} onClick={() => {setPortionNumber((portionNumber - 1))}}>PREV</button>}
         {pages.filter(page => page >= leftPortionPageNumber && page <= rightPortionPageNumber)
             .map((page) => {
             return <span
@@ -39,7 +39,7 @@ return (
         })}
 
         {portionCount > portionNumber &&
-        <button onClick={()=> {setPortionNumber(portionNumber + 1)}}>NEXT</button>}
+        <button className={styles.butt} onClick={()=> {setPortionNumber(portionNumber + 1)}}>NEXT</button>}
     </div>
 )
 }

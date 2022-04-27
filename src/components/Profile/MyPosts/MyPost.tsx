@@ -4,10 +4,10 @@ import Post from "./Post1/Post";
 import {MyPostPropsType} from "./MyPostContainer";
 import {maxLengthCreator, required} from "../../../utils/validators";
 import {Textarea} from "../../common/FormsControls/FormsConrols";
-import { AddMessageFormik } from '../../Dialogs/Dialogs';
-import { useFormik } from 'formik';
-import { useDispatch } from 'react-redux';
-import { addPostActionCreator } from '../../../redux/profile-reducer';
+import {AddMessageFormik} from '../../Dialogs/Dialogs';
+import {useFormik} from 'formik';
+import {useDispatch} from 'react-redux';
+import {addPostActionCreator} from '../../../redux/profile-reducer';
 
 type FormikErrorType = {
     newPostText?: string
@@ -27,10 +27,10 @@ const MyPost = React.memo((props: MyPostPropsType) => {
         },
         validate: (values) => {
             const errors: FormikErrorType = {};
-                if(!values.newPostText) {
-                    errors.newPostText = 'Post must be more 0 symbols '
+            if (!values.newPostText) {
+                errors.newPostText = 'Post must be more 0 symbols '
             }
-                return errors
+            return errors
         }
     })
 
@@ -46,13 +46,14 @@ const MyPost = React.memo((props: MyPostPropsType) => {
         <div className={classes.postsBlock}>
             <h3>My posts</h3>
             <form onSubmit={formik.handleSubmit}>
-            <textarea
-                name={'newPostText'}
-                onChange={formik.handleChange}
-                value={formik.values.newPostText}
-                onBlur={formik.handleBlur}
+            <textarea className={classes.textarea}
+                      name={'newPostText'}
+                      onChange={formik.handleChange}
+                      value={formik.values.newPostText}
+                      onBlur={formik.handleBlur}
+                      placeholder={'write a new POST'}
             />
-                <button>Create POST</button>
+                <button className={classes.button}>Create POST</button>
             </form>
             {formik.errors.newPostText && <div style={{color: 'red'}}>{formik.errors.newPostText}</div>}
 
@@ -62,7 +63,6 @@ const MyPost = React.memo((props: MyPostPropsType) => {
         </div>
     )
 })
-
 
 
 let maxLength10 = maxLengthCreator(10)
