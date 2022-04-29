@@ -1,31 +1,22 @@
 import React from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {dialogsPageType, sendMessageCreator} from '../../redux/dialog-reducer';
+import {StateType} from '../../redux/redux-store';
+import DialogItem from './DialogItem/DialogItem';
+import Message from './Message/Message';
 import classes from './Dialogs.module.css'
-import DialogItem from "./DialogItem/DialogItem";
-import Message from "./Message/Message";
-import {DialPropsType} from "./DialogsContainer";
-import {dialogsPageType, sendMessageCreator} from "../../redux/dialog-reducer";
-import {Textarea} from "../common/FormsControls/FormsConrols";
-import {maxLengthCreator, required} from "../../utils/validators";
+import {maxLengthCreator} from "../../utils/validators";
 import {useFormik} from 'formik';
-import { useDispatch } from 'react-redux';
 
-type dialogsProps = {
-    sendMessage: (body: string) => void
-    dialogsPage: dialogsPageType
-}
+const DialogsWithoutContainer = () => {
 
-const Dialogs = (props: DialPropsType) => {
-    let state = props.dialogsPage
+    let state = useSelector<StateType, dialogsPageType>(st => st.dialogsPage)
 
     let dialogsElements = state.dialogNames.map(dN => <DialogItem name={dN.name} id={dN.id} ava={dN.ava} key={dN.id}/>)
     let messagesElements = state.dialogMessages.map(dM => <Message id={dM.id}
                                                                    message={dM.message}
                                                                    key={dM.id}
     />)
-
-    let addNewMessage = (values: any) => {
-        props.sendMessage(values.newMessageBody)
-    }
 
     return (
         <div className={classes.dialogs}>
@@ -64,13 +55,14 @@ export const AddMessageFormik = () => {
     return (
         <form onSubmit={formik.handleSubmit}>
             <textarea
+                className={classes.textarea}
                 name={'newMessageBody'}
                 onChange={formik.handleChange}
                 value={formik.values.newMessageBody}
             />
-            <button>Send Message</button>
+            <button className={classes.button}>Send Message</button>
         </form>
     )
 }
 
-export default Dialogs;
+export default DialogsWithoutContainer;

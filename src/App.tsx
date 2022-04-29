@@ -10,7 +10,7 @@ import {Preloader} from "./components/common/Preloader/Preloader";
 import {LoginFormik} from "./components/Login/LoginFormik";
 import { InProgress } from './components/InProgress/InProgress';
 
-const DialogsContainer = React.lazy(() => import("./components/Dialogs/DialogsContainer"))
+const DialogsWithoutContainer = React.lazy(() => import("./components/Dialogs/DialogsWithoutContainer"))
 const ProfileContainer = React.lazy(() => import("./components/Profile/ProfileContainer"))
 const UsersContainer = React.lazy(() => import("./components/Users/UsersContainer"))
 
@@ -33,7 +33,7 @@ class App extends React.Component <AppPropsType> {
                         <Switch>
                             <Route exact path='/' render={() => <Redirect to={'profile'}/>}/>
                             <Route path='/profile/:userId?' render={() => <ProfileContainer/>}/>
-                            <Route path='/dialogs' render={() => <DialogsContainer
+                            <Route path='/dialogs' render={() => <DialogsWithoutContainer
                             />}/>
                             <Route path='/users' render={() => <UsersContainer/>}/>
                             <Route path='/login' render={() => <LoginFormik/>}/>
