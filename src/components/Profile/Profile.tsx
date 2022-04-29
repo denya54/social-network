@@ -1,7 +1,7 @@
 import React from 'react';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import MyPostContainer from "./MyPosts/MyPostContainer";
 import {ProfileDataType, UserProfileType} from "../../redux/profile-reducer";
+import MyPostWithoutContainer from './MyPosts/MyPostWithoutContainer';
 
 type ProfilePropsType = {
     profile: UserProfileType | null
@@ -28,7 +28,7 @@ const Profile = (props: ProfilePropsType) => {
             {/*        dispatch={props.dispatch}*/}
             {/*        newPostText={props.stateProfile.newPostText}*/}
             {/*/>*/}
-            <MyPostContainer/>
+            <MyPostWithoutContainer/>
         </div>
     )
 }

@@ -1,19 +1,19 @@
-import classes from './MyPost.module.css'
+import { useFormik } from "formik";
 import React from "react";
-import Post from "./Post1/Post";
-import {MyPostPropsType} from "./MyPostContainer";
-import {maxLengthCreator, required} from "../../../utils/validators";
-import {Textarea} from "../../common/FormsControls/FormsConrols";
-import {AddMessageFormik} from '../../Dialogs/Dialogs';
-import {useFormik} from 'formik';
-import {useDispatch} from 'react-redux';
-import {addPostActionCreator} from '../../../redux/profile-reducer';
+import { useDispatch, useSelector } from "react-redux";
+import {addPostActionCreator, postType } from "../../../redux/profile-reducer";
+import { StateType } from "../../../redux/redux-store";
+import Post from "./Post/Post";
+import classes from './MyPost.module.css';
+import {maxLengthCreator} from "../../../utils/validators";
 
 type FormikErrorType = {
     newPostText?: string
 }
 
-const MyPost = React.memo((props: MyPostPropsType) => {
+const MyPostWithoutContainer = React.memo(() => {
+
+    const statePosts = useSelector<StateType, Array<postType>>(st => st.profilePage.posts)
 
     const dispatch = useDispatch()
 
@@ -34,13 +34,9 @@ const MyPost = React.memo((props: MyPostPropsType) => {
         }
     })
 
-    let postsElement = props.statePosts.map(post => <Post key={post.id}
+    let postsElement = statePosts.map(post => <Post key={post.id}
                                                           message={post.message}
                                                           likesCount={post.likesCount}/>)
-
-    let onAddPost = (values: any) => {
-        props.addPost(values.newPostText)
-    }
 
     return (
         <div className={classes.postsBlock}>
@@ -68,4 +64,4 @@ const MyPost = React.memo((props: MyPostPropsType) => {
 let maxLength10 = maxLengthCreator(10)
 
 
-export default MyPost;
+export default MyPostWithoutContainer;

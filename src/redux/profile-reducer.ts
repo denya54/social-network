@@ -67,7 +67,7 @@ let initialState: profilePageType = {
     posts: [
         {id: 1, message: "My first GAV", likesCount: 12},
         {id: 2, message: "Don`t like Myay", likesCount: 10},
-        {id: 3, message: "How do you do", likesCount: 16},
+        {id: 3, message: "How do you do?", likesCount: 16},
     ] as Array<postType>,
     profile: null,
     status: "",
